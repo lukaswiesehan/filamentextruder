@@ -9,8 +9,8 @@
 #define SPOOL_OUTER_DIAMETER 200
 
 //Declare Extruder FSM states
-enum states {init, refStep, idle, heatup, ready, extrude, windUp};
-states currentState = init;
+enum states {initialize, refStep, idle, heatup, ready, extrude, windUp};
+states currentState = initialize;
 
 //Declare extruder process variables
 int nominalTemp = NOMINAL_TEMP;
@@ -117,19 +117,19 @@ void heatup_bStartExt_callback() {
 }
 void heatup_bTempMinus5_callback() {
   nominalTemp -= 5;
-  heatup_tTemp.setText(String(nominalTemp) + " °C");
+  heatup_tTemp.setText(tempText(nominalTemp));
 }
 void heatup_bTempMinus1_callback() {
   nominalTemp -= 1;
-  heatup_tTemp.setText(String(nominalTemp) + " °C");
+  heatup_tTemp.setText(tempText(nominalTemp));
 }
 void heatup_bTempPlus1_callback() {
   nominalTemp += 1;
-  heatup_tTemp.setText(String(nominalTemp) + " °C");
+  heatup_tTemp.setText(tempText(nominalTemp));
 }
 void heatup_bTempPlus5_callback() {
   nominalTemp += 5;
-  heatup_tTemp.setText(String(nominalTemp) + " °C");
+  heatup_tTemp.setText(tempText(nominalTemp));
 }
 //Page 3: extrude
 void extrude_bCooldown_callback() {
@@ -142,15 +142,15 @@ void extrude_bPauseExt_callback() {
 }
 void extrude_bStartWind_callback() {
   windupPage.show();
-  currentState = windup;
+  currentState = windUp;
 }
 void extrude_bTempMinus1_callback() {
   nominalTemp -= 1;
-  extrude_tTemp.setText(String(nominalTemp) + " °C");
+  extrude_tTemp.setText(tempText(nominalTemp));
 }
 void extrude_bTempPlus1_callback() {
   nominalTemp += 1;
-  extrude_tTemp.setText(String(nominalTemp) + " °C");
+  extrude_tTemp.setText(tempText(nominalTemp));
 }
 //Page 4: windup
 void windup_bCooldown_callback() {
@@ -163,33 +163,33 @@ void windup_bPauseWind_callback() {
 }
 void windup_bTempMinus1_callback() {
   nominalTemp -= 1;
-  windup_tTemp.setText(String(nominalTemp) + " °C");
+  windup_tTemp.setText(tempText(nominalTemp));
 }
 void windup_bTempPlus1_callback() {
   nominalTemp += 1;
-  windup_tTemp.setText(String(nominalTemp) + " °C");
+  windup_tTemp.setText(tempText(nominalTemp));
 }
 void windup_bSpeedMin01_callback() {
   windUpSpeed -= 0.1;
-  windup_tSpeed.setText(String(windUpSpeed) + " RPM");
+  windup_tSpeed.setText(speedText(windUpSpeed));
 }
 void windup_bSpeedMin001_callback() {
   windUpSpeed -= 0.01;
-  windup_tSpeed.setText(String(windUpSpeed) + " RPM");
+  windup_tSpeed.setText(speedText(windUpSpeed));
 }
 void windup_bSpeedPlus01_callback() {
   windUpSpeed += 0.1;
-  windup_tSpeed.setText(String(windUpSpeed) + " RPM");
+  windup_tSpeed.setText(speedText(windUpSpeed));
 }
 void windup_bSpeedPlus001_callback() {
   windUpSpeed += 0.01;
-  windup_tSpeed.setText(String(windUpSpeed) + " RPM");
+  windup_tSpeed.setText(speedText(windUpSpeed));
 }
 
 //Define state machine evaluations
 void evalStates() {
   switch(currentState) {
-    case init:
+    case initialize:
       delay(500);
       init_pInitSensors.show();
       delay(600);
@@ -221,6 +221,18 @@ void evalStates() {
     default:
       break;
   }
+}
+
+//Define text transform functions
+char* tempText(int temp) {
+  char* displayText;
+  (String(temp) + " °C").toCharArray(displayText, (temp > 99) ? 6 : 5);
+  return displayText;
+}
+char* speedText(float speed) {
+  char* displayText;
+  (String(speed).substring(0, 3) + " RPM").toCharArray(displayText, 8);
+  return displayText;
 }
 
 void setup() {
@@ -259,3 +271,4 @@ void loop() {
   evalStates();
   nexLoop(nexListenList);
 }
+
