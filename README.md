@@ -26,7 +26,7 @@ besitzen.
 Es wird also der Debug-Serial abgeschaltet, damit der einzige Serial-Kanal des Arduinos für 
 die Kommunikation mit dem Display verwendet werden kann.
 
-Weiterhin werden dem *NexButton* und dem *NexPicture* Funktionen hinzugefügt, die es
+Weiterhin werden der *NexButton*- und der *NexPicture*-Klasse Methoden hinzugefügt, die es
 ermöglichen, diese Komponenten ein- bzw. auszublenden.
 
 ```c++
