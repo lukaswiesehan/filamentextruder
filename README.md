@@ -1,8 +1,9 @@
 # Filament Extruder
 
-Bachelorprojekt im Studiengang Mechatronik, HAW Hamburg
+Bachelorprojekt im Studiengang Mechatronik, HAW Hamburg  
+*Entwickelt von Tobias Freytag, Anton Neike, Max Sahlke, Lukas Wiesehan.  
+Betreut von Prof. Dr. Dietmar Pähler.*
 
-*Tobias Freytag, Anton Neike, Max Sahlke, Lukas Wiesehan*
 
 ### Projektstruktur
 
@@ -11,8 +12,10 @@ Realisierung des HMI verwendet wird.
 
 ### Nextion Library Setup
 
-Damit die Nextion Library auch mit einem Arduino Uno/Nano verwendet werden kann, muss die 
-*NexConfig* angepasst werden, da kleinere Arduino Boards nur einen Hardware Serial Kanal 
+Zur einfachen Kommunikation zwischen Display und Arduino wird die offizielle 
+[Nextion Library](https://github.com/itead/ITEADLIB_Arduino_Nextion) verwendet.
+Damit diese auch mit einem Arduino Uno/Nano verwendet werden kann, muss die 
+`NexConfig.h` angepasst werden, da kleinere Arduino Boards nur einen Hardware Serial Kanal 
 besitzen.
 
 ```c++
@@ -26,7 +29,7 @@ besitzen.
 Es wird also der Debug-Serial abgeschaltet, damit der einzige Serial-Kanal des Arduinos für 
 die Kommunikation mit dem Display verwendet werden kann.
 
-Weiterhin werden der *NexButton*- und der *NexPicture*-Klasse Methoden hinzugefügt, die es
+Weiterhin werden der `NexButton`- und der `NexPicture`-Klasse Methoden hinzugefügt, die es
 ermöglichen, diese Komponenten ein- bzw. auszublenden.
 
 ```c++
