@@ -4,15 +4,22 @@ Bachelorprojekt im Studiengang Mechatronik, HAW Hamburg.
 *Entwickelt von Tobias Freytag, Anton Neike, Max Sahlke, Lukas Wiesehan.  
 Betreut von Prof. Dr. Dietmar Pähler.*
 
-1. [Projektstruktur](#projektstruktur)
-2. [Nextion Library Setup](#nextion-library-setup)
+1. [Einführung](#einführung)
+2. [Repo-Struktur](#repo-struktur)
+3. [Hardware](#hardware)
+4. [Nextion Library Setup](#nextion-library-setup)
 
-## Projektstruktur
+## Einführung
 
 Die Steuerung des Extruders erfolgt mittels Arduino, wobei ein Nextion Display zur 
 Realisierung des HMI verwendet wird.
 
+## Repo-Struktur
+
 ## Hardware
+
+Nachfolgend werden alle Komponenten aufgelistet, die bestellt werden müssen. Gehäuse- und Druckteile sind in [/cad]() abgelegt und können auf unterschiedliche Weise gefertigt 
+werden, weshalb sie in der Kostenaufstellung nicht berücksichtigt werden.
 
 | Anzahl | Bezeichnung | Beschreibung | Preis |
 |:---:| --- | --- |:---:|
@@ -25,7 +32,7 @@ Realisierung des HMI verwendet wird.
 | 1x | [Temperatursensor PT100](https://www.conrad.de/de/p/heraeus-nexensos-w-eyk-6-pt100-platin-temperatursensor-40-bis-500-c-100-3850-ppm-k-172412.html) | Sensor zur Bestimmung der Extrudertemperatur | 15,03€ |
 | 1x | [Adafruit MAX31865](https://www.conrad.de/de/p/adafruit-pt1000-rtd-temperature-sensor-amplifier-max31865-802235187.html) | Modul zur Wandlung des Sensorsignals des PT100 | 19,33€ |
 
-Die Hardware-Kosten summieren sich damit auf **299,00€** zzgl. diverser Versandkosten.
+Die Hardware-Kosten summieren sich damit auf **299,00€** zzgl. diverser Versandkosten sowie der Gehäuse- bzw. Druckteile.
 
 ## Nextion Library Setup
 
