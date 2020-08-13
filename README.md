@@ -36,10 +36,11 @@ Die Hardware-Kosten summieren sich damit auf **435,89€** zzgl. diverser Versan
 
 ## Nextion Library Setup
 
-### Konfiguration
-
 Zur einfachen Kommunikation zwischen Display und Arduino wird die offizielle 
 [Nextion Library](https://github.com/itead/ITEADLIB_Arduino_Nextion) verwendet.
+
+### Konfiguration
+
 Damit diese auch mit einem Arduino Uno/Nano verwendet werden kann, muss die 
 `NexConfig.h` angepasst werden, da kleinere Arduino Boards nur einen Hardware Serial Kanal 
 besitzen.
@@ -90,34 +91,7 @@ bool NexButton::show()
 }
 ```
 
-###### NexPicture.h erweitern
-```c++
-bool hide();
-bool show();
-```
-
-###### NexPicture.cpp erweitern
-```c++
-bool NexPicture::hide()
-{
-  String cmd;
-
-  cmd += "vis ";
-  cmd += getObjName();
-  cmd += ",0";
-  sendCommand(cmd.c_str());
-  return recvRetCommandFinished();
-}
-
-bool NexPicture::show()
-{
-  String cmd;
-
-  cmd += "vis ";
-  cmd += getObjName();
-  cmd += ",1";
-  sendCommand(cmd.c_str());
-  return recvRetCommandFinished();
-}
-```
+Analog zu den Erweiterungen der `NexButton`-Klasse wird auch die `NexPicture`-Klasse erweitert.
+Zudem wird die Methode `NexText.setText(const char *buffer)` zu `NexText.setText(String buffer)` geändert, sodass zum Senden an das Display keine 
+Konvertierung in Char-Arrays mehr vorgenommen werden muss. Dies ist sowohl in `NexText.h`, als auch in `NexText.cpp` zu ändern.
 
