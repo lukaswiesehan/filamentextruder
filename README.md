@@ -7,14 +7,14 @@ Betreut von Prof. Dr. Dietmar Pähler.*
 1. [Projektstruktur](#projektstruktur)
 2. [Nextion Library Setup](#nextion-library-setup)
 
-### Projektstruktur
+## Projektstruktur
 
 Die Steuerung des Extruders erfolgt mittels Arduino, wobei ein Nextion Display zur 
 Realisierung des HMI verwendet wird.
 
-### Nextion Library Setup
+## Nextion Library Setup
 
-#### Konfiguration
+### Konfiguration
 
 Zur einfachen Kommunikation zwischen Display und Arduino wird die offizielle 
 [Nextion Library](https://github.com/itead/ITEADLIB_Arduino_Nextion) verwendet.
@@ -32,7 +32,7 @@ besitzen.
 Es wird also der Debug-Serial abgeschaltet, damit der einzige Serial-Kanal des Arduinos für 
 die Kommunikation mit dem Display verwendet werden kann.
 
-#### Komponenten ein-/ausblenden
+### Komponenten ein-/ausblenden
 
 Weiterhin werden der `NexButton`- und der `NexPicture`-Klasse Methoden hinzugefügt, die es
 ermöglichen, diese Komponenten ein- bzw. auszublenden.
