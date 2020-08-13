@@ -34,36 +34,37 @@ NexButton idle_bSettings(1, 4, "bSettings");
 //Page 2: heatup
 NexPage heatupPage(2, 0, "heatup");
 NexButton heatup_bCooldown(2, 2, "bCooldown");
-NexButton heatup_bStartExt(2, 14, "bStartExt");
+NexButton heatup_bStartExt(2, 13, "bStartExt");
+NexText heatup_tReady(2, 15, "tReady");
 NexButton heatup_bTempMinus5(2, 8, "bTempMinus5");
-NexButton heatup_bTempMinus1(2, 11, "bTempMinus1");
-NexButton heatup_bTempPlus1(2, 12, "bTempPlus1");
+NexButton heatup_bTempMinus1(2, 10, "bTempMinus1");
+NexButton heatup_bTempPlus1(2, 11, "bTempPlus1");
 NexButton heatup_bTempPlus5(2, 9, "bTempPlus5");
-NexText heatup_tTemp(2, 10, "tTemp");
+NexNumber heatup_nNominalTemp(2, 16, "nNominalTemp");
 NexNumber heatup_nActualTemp(2, 4, "nActualTemp");
 NexProgressBar heatup_jTempBar(2, 3, "jTempBar");
 //Page 3: extrude
 NexPage extrudePage(3, 0, "extrude");
 NexButton extrude_bCooldown(3, 2, "bCooldown");
-NexButton extrude_bPauseExt(3, 12, "bPauseExt");
-NexButton extrude_bStartWind(3, 11, "bStartWind");
+NexButton extrude_bPauseExt(3, 11, "bPauseExt");
+NexButton extrude_bStartWind(3, 10, "bStartWind");
 NexButton extrude_bTempMinus1(3, 8, "bTempMinus1");
 NexButton extrude_bTempPlus1(3, 9, "bTempPlus1");
-NexText extrude_tTemp(3, 10, "tTemp");
+NexNumber extrude_nNominalTemp(3, 14, "nNominalTemp");
 NexNumber extrude_nActualTemp(3, 4, "nActualTemp");
 NexProgressBar extrude_jTempBar(3, 3, "jTempBar");
 //Page 4: windup
 NexPage windupPage(4, 0, "windup");
 NexButton windup_bCooldown(4, 2, "bCooldown");
-NexButton windup_bPauseWind(4, 11, "bPauseWind");
+NexButton windup_bPauseWind(4, 10, "bPauseWind");
 NexButton windup_bTempMinus1(4, 8, "bTempMinus1");
 NexButton windup_bTempPlus1(4, 9, "bTempPlus1");
-NexButton windup_bSpeedMin01(4, 15, "bSpeedMin01");
-NexButton windup_bSpeedMin001(4, 16, "bSpeedMin001");
-NexButton windup_bSpeedPlus01(4, 13, "bSpeedPlus01");
-NexButton windup_bSpeedPlus001(4, 14, "bSpeedPlus001");
-NexText windup_tTemp(4, 10, "tTemp");
-NexText windup_tSpeed(4, 17, "tSpeed");
+NexButton windup_bSpeedMin01(4, 14, "bSpeedMin01");
+NexButton windup_bSpeedMin001(4, 15, "bSpeedMin001");
+NexButton windup_bSpeedPlus01(4, 12, "bSpeedPlus01");
+NexButton windup_bSpeedPlus001(4, 13, "bSpeedPlus001");
+NexNumber windup_nNominalTemp(4, 10, "nNominalTemp");
+NexText windup_tSpeed(4, 16, "tSpeed");
 NexNumber windup_nActualTemp(4, 4, "nActualTemp");
 NexProgressBar windup_jTempBar(4, 3, "jTempBar");
 
@@ -75,6 +76,7 @@ NexTouch *nexListenList[] = {
   //Page 2: heatup
   &heatup_bCooldown,
   &heatup_bStartExt,
+  &heatup_tReady,
   &heatup_bTempMinus5,
   &heatup_bTempMinus1,
   &heatup_bTempPlus1,
@@ -102,6 +104,8 @@ NexTouch *nexListenList[] = {
 void idle_bHeatup_callback() {
   heatupPage.show();
   currentState = heatup;
+  heatup_nNominalTemp.setValue(nominalTemp);
+  dbSerialPrintln("currentState = heatup");
 }
 void idle_bSettings_callback() {
   //show settings page...
@@ -110,86 +114,100 @@ void idle_bSettings_callback() {
 void heatup_bCooldown_callback() {
   idlePage.show();
   currentState = idle;
+  dbSerialPrintln("currentState = idle");
 }
 void heatup_bStartExt_callback() {
   extrudePage.show();
   currentState = extrude;
+  extrude_nNominalTemp.setValue(nominalTemp);
+  dbSerialPrintln("currentState = extrude");
 }
 void heatup_bTempMinus5_callback() {
   nominalTemp -= 5;
-  heatup_tTemp.setText(tempText(nominalTemp));
+  heatup_nNominalTemp.setValue(nominalTemp);
 }
 void heatup_bTempMinus1_callback() {
   nominalTemp -= 1;
-  heatup_tTemp.setText(tempText(nominalTemp));
+  heatup_nNominalTemp.setValue(nominalTemp);
 }
 void heatup_bTempPlus1_callback() {
   nominalTemp += 1;
-  heatup_tTemp.setText(tempText(nominalTemp));
+  heatup_nNominalTemp.setValue(nominalTemp);
 }
 void heatup_bTempPlus5_callback() {
   nominalTemp += 5;
-  heatup_tTemp.setText(tempText(nominalTemp));
+  heatup_nNominalTemp.setValue(nominalTemp);
 }
 //Page 3: extrude
 void extrude_bCooldown_callback() {
   idlePage.show();
   currentState = idle;
+  dbSerialPrintln("currentState = idle");
 }
 void extrude_bPauseExt_callback() {
   heatupPage.show();
   currentState = heatup;
+  heatup_nNominalTemp.setValue(nominalTemp);
+  dbSerialPrintln("currentState = heatup");
 }
 void extrude_bStartWind_callback() {
   windupPage.show();
   currentState = windUp;
+  windup_tSpeed.setText(String(windUpSpeed).substring(0, 4) + " RPM");
+  windup_nNominalTemp.setValue(nominalTemp);
+  dbSerialPrintln("currentState = windUp");
 }
 void extrude_bTempMinus1_callback() {
   nominalTemp -= 1;
-  extrude_tTemp.setText(tempText(nominalTemp));
+  extrude_nNominalTemp.setValue(nominalTemp);
 }
 void extrude_bTempPlus1_callback() {
   nominalTemp += 1;
-  extrude_tTemp.setText(tempText(nominalTemp));
+  extrude_nNominalTemp.setValue(nominalTemp);
 }
 //Page 4: windup
 void windup_bCooldown_callback() {
   idlePage.show();
   currentState = idle;
+  dbSerialPrintln("currentState = idle");
 }
 void windup_bPauseWind_callback() {
   extrudePage.show();
   currentState = extrude;
+  extrude_nNominalTemp.setValue(nominalTemp);
+  dbSerialPrintln("currentState = extrude");
 }
 void windup_bTempMinus1_callback() {
   nominalTemp -= 1;
-  windup_tTemp.setText(tempText(nominalTemp));
+  windup_nNominalTemp.setValue(nominalTemp);
 }
 void windup_bTempPlus1_callback() {
   nominalTemp += 1;
-  windup_tTemp.setText(tempText(nominalTemp));
+  windup_nNominalTemp.setValue(nominalTemp);
 }
 void windup_bSpeedMin01_callback() {
   windUpSpeed -= 0.1;
-  windup_tSpeed.setText(speedText(windUpSpeed));
+  windup_tSpeed.setText(String(windUpSpeed).substring(0, 4) + " RPM");
 }
 void windup_bSpeedMin001_callback() {
   windUpSpeed -= 0.01;
-  windup_tSpeed.setText(speedText(windUpSpeed));
+  windup_tSpeed.setText(String(windUpSpeed).substring(0, 4) + " RPM");
 }
 void windup_bSpeedPlus01_callback() {
   windUpSpeed += 0.1;
-  windup_tSpeed.setText(speedText(windUpSpeed));
+  windup_tSpeed.setText(String(windUpSpeed).substring(0, 4) + " RPM");
 }
 void windup_bSpeedPlus001_callback() {
   windUpSpeed += 0.01;
-  windup_tSpeed.setText(speedText(windUpSpeed));
+  windup_tSpeed.setText(String(windUpSpeed).substring(0, 4) + " RPM");
 }
 
 //Define state machine evaluations
 void evalStates() {
   switch(currentState) {
     case initialize:
+      dbSerialPrintln("currentState = init");
+      initPage.show();
       delay(500);
       init_pInitSensors.show();
       delay(600);
@@ -197,19 +215,26 @@ void evalStates() {
       delay(400);
       init_pInitMotors.show();
       currentState = refStep;
+      dbSerialPrintln("currentState = refStep");
       break;
     case refStep:
       delay(2000);
       init_pRefStepper.show();
       delay(500);
+      idlePage.show();
       currentState = idle;
+      dbSerialPrintln("currentState = idle");
       break;
     case idle:
       break;
     case heatup:
+      delay(5000);
+      actualTemp = nominalTemp;
       if(actualTemp == nominalTemp) {
         heatup_bStartExt.show();
+        heatup_tReady.show();
         currentState = ready;
+        dbSerialPrintln("currentState = ready");
       }
       break;
     case ready:
@@ -223,21 +248,12 @@ void evalStates() {
   }
 }
 
-//Define text transform functions
-char* tempText(int temp) {
-  char* displayText;
-  (String(temp) + " °C").toCharArray(displayText, (temp > 99) ? 6 : 5);
-  return displayText;
-}
-char* speedText(float speed) {
-  char* displayText;
-  (String(speed).substring(0, 3) + " RPM").toCharArray(displayText, 8);
-  return displayText;
-}
-
 void setup() {
   //Initialize display
   nexInit();
+
+  //Open debug serial 
+  Serial.begin(9600);
 
   //Register callback functions
   //Page 1: idle
