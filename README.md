@@ -32,7 +32,7 @@ werden, weshalb sie in der Kostenaufstellung nicht berücksichtigt werden.
 | 1x | [Temperatursensor PT100](https://www.conrad.de/de/p/heraeus-nexensos-w-eyk-6-pt100-platin-temperatursensor-40-bis-500-c-100-3850-ppm-k-172412.html) | Sensor zur Bestimmung der Extrudertemperatur | 15,03€ |
 | 1x | [Adafruit MAX31865](https://www.conrad.de/de/p/adafruit-pt1000-rtd-temperature-sensor-amplifier-max31865-802235187.html) | Modul zur Wandlung des Sensorsignals des PT100 | 19,33€ |
 
-Die Hardware-Kosten summieren sich damit auf **299,00€** zzgl. diverser Versandkosten sowie der Gehäuse- bzw. Druckteile.
+Die Hardware-Kosten summieren sich damit auf **435,89€** zzgl. diverser Versandkosten sowie der Gehäuse- bzw. Druckteile.
 
 ## Nextion Library Setup
 
