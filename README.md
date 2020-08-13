@@ -12,6 +12,16 @@ Betreut von Prof. Dr. Dietmar Pähler.*
 Die Steuerung des Extruders erfolgt mittels Arduino, wobei ein Nextion Display zur 
 Realisierung des HMI verwendet wird.
 
+## Hardware
+
+| Anzahl | Bezeichnung | Beschreibung | Preis |
+| --- | --- | --- | --- |
+| 1x | [Felfil Evo Basic Kit](https://felfil.com/shop/felfil-evo-basic-kit/?v=5ea34fa833a1) | Basiskomponenten des Extruders als Bausatz. | 299,00€ |
+| 1x | [24V Netzteil]() | Primäre Spannungsquelle des Systems. | |
+| 1x | [Spannungswandler 24V -> 12V]() | Spannungsquelle für 12V-Extrudermotor und 12V-Lüfter | | 
+
+Die Hardware-Kosten summieren sich damit auf **299,00€** zzgl. diverser Versandkosten.
+
 ## Nextion Library Setup
 
 ### Konfiguration
