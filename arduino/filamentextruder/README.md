@@ -1,10 +1,15 @@
-**FILAMENT-EXTRUDER**
-# Steuerung des Systems
+# Arduino-Code
+
+Die Steuerung des Systems ist als *Finite State Machine* umgesetzt und läuft grundsätzlich auf allen gängigen Arduinos.
+Vom Arduino Nano wird allerdings abgeraten, da der Variablenspeicher nur knapp ausreicht, was Performance-Nachteile mit sich bringen kann.
+Die Temperaturregelung des Extruders erfolgt mithilfe eines Software-PID-Reglers, der die Leistung der Heizpatronen über Mosfets
+steuern kann, welche per PWM-Signal angesprochen werden.
 
 ## Nextion Library Setup
 
 Zur einfachen Kommunikation zwischen Display und Arduino wird die offizielle 
 [Nextion Library](https://github.com/itead/ITEADLIB_Arduino_Nextion) verwendet.
+Für eine fehlerfreie Einbindung in das Projekt sind einige Änderungen an der Bibliothek notwendig, die nachfolgend kurz erläutert werden.
 
 ### Konfiguration
 
@@ -59,6 +64,8 @@ bool NexButton::show()
 ```
 
 Analog zu den Erweiterungen der `NexButton`-Klasse wird auch die `NexPicture`-Klasse erweitert.
+
+### Text bearbeiten
 
 Zudem wird die Methode `NexText.setText()` so verändert, dass zum Senden an das Display keine 
 Konvertierung in Char-Arrays mehr vorgenommen werden muss.
