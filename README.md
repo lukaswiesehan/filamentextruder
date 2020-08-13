@@ -92,6 +92,20 @@ bool NexButton::show()
 ```
 
 Analog zu den Erweiterungen der `NexButton`-Klasse wird auch die `NexPicture`-Klasse erweitert.
-Zudem wird die Methode `NexText.setText(const char *buffer)` zu `NexText.setText(String buffer)` geändert, sodass zum Senden an das Display keine 
-Konvertierung in Char-Arrays mehr vorgenommen werden muss. Dies ist sowohl in `NexText.h`, als auch in `NexText.cpp` zu ändern.
+
+Zudem wird die Methode `NexText.setText()` so verändert, dass zum Senden an das Display keine 
+Konvertierung in Char-Arrays mehr vorgenommen werden muss.
+
+###### NexText.h bearbeiten
+```c++
+bool setText(String buffer);   
+```
+
+###### NexText.cpp bearbeiten
+```c++
+bool NexText::setText(String buffer)
+{
+    [...]  
+}
+```
 
