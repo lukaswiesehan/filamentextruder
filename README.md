@@ -15,7 +15,7 @@ Realisierung des HMI verwendet wird.
 ## Hardware
 
 | Anzahl | Bezeichnung | Beschreibung | Preis |
-| --- | --- | --- | --- |
+|:---:| --- | --- |:---:|
 | 1x | [Felfil Evo Basic Kit](https://felfil.com/shop/felfil-evo-basic-kit/?v=5ea34fa833a1) | Basiskomponenten des Extruders als Bausatz | 299,00€ |
 | 1x | [24V Netzteil]() | Primäre Spannungsquelle des Systems | |
 | 1x | [Spannungswandler 24V -> 12V]() | Spannungsversorgung der 12V-Komponenten (Extrudermotor & Lüfter) | |
@@ -23,7 +23,7 @@ Realisierung des HMI verwendet wird.
 | 3x | [Mosfet Modul]() | Steuerung der Heizpatronen | |
 | 3x | [Heizpatrone]() | Heizmodule des Extruders | |
 | 1x | [Temperatursensor PT100]() | Sensor zur Bestimmung der Extrudertemperatur | |
-| 1x | [Adafruit MAXbla]() | Modul zur Wandlung des Sensorsignals des PT100 | |
+| 1x | [Adafruit MAX31865]() | Modul zur Wandlung des Sensorsignals des PT100 | |
 
 Die Hardware-Kosten summieren sich damit auf **299,00€** zzgl. diverser Versandkosten.
 
