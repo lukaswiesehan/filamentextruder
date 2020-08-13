@@ -34,6 +34,6 @@ werden, weshalb sie in der Kostenaufstellung nicht berücksichtigt werden.
 | 2x | [Schrittmotortreiber SMD356C](https://www.conrad.de/de/p/waveshare-smd356c-three-phase-hybrid-stepper-motor-driver-806805951.html) | Steuerung der Wicklungsmotoren | 41,44€ |
 | 2x | [Schrittmotor NEMA-17](https://www.conrad.de/de/p/joy-it-schrittmotor-nema-17-01-nema-17-01-0-4-nm-1-68-a-wellen-durchmesser-5-mm-1597325.html) | Antriebe des Wicklungsmechanismus | 27,20€ |
 
-Die Hardware-Kosten summieren sich damit auf **435,89€** zzgl. diverser Versandkosten sowie der Gehäuse- bzw. Druckteile.
+Die Hardware-Kosten summieren sich damit auf **573,17€** zzgl. diverser Versandkosten sowie der Gehäuse- bzw. Druckteile.
 
 
