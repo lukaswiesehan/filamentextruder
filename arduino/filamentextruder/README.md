@@ -7,8 +7,8 @@ steuern kann, welche per PWM-Signal angesprochen werden.
 
 - [Finite State Machine](#finite-state-machine)
 - [Benötigte Libraries](#benötigte-libraries)
+- [Konfiguration des Systems](#konfiguration-des-systems)
 - [Nextion Library Setup](#nextion-library-setup)
-  - [Konfiguration](#konfiguration)
   - [Komponenten ein-/ausblenden](#komponenten-ein-ausblenden)
   - [Text bearbeiten](#text-bearbeiten)
 
@@ -23,27 +23,15 @@ Die State Machine, die als Basis der Steuerung dient, kann wie folgt vereinfacht
 
 tbd
 
+## Konfiguration des Systems
+
+tbd
+
 ## Nextion Library Setup
 
 Zur einfachen Kommunikation zwischen Display und Arduino wird die offizielle 
 [Nextion Library](https://github.com/itead/ITEADLIB_Arduino_Nextion) verwendet.
 Für eine fehlerfreie Einbindung in das Projekt sind einige Änderungen an der Bibliothek notwendig, die nachfolgend kurz erläutert werden.
-
-### Konfiguration
-
-Falls das System mit einem Arduino Uno/Nano gesteuert werden soll, muss die 
-`NexConfig.h` angepasst werden, da kleinere Arduino Boards nur einen Hardware Serial Kanal 
-besitzen.
-
-###### NexConfig.h bearbeiten <!-- omit in toc -->
-```c++
-//#define DEBUG_SERIAL_ENABLE
-//#define dbSerial Serial
-#define nexSerial Serial
-```
-
-Es wird also der Debug-Serial abgeschaltet, damit der einzige Serial-Kanal des Arduinos für 
-die Kommunikation mit dem Display verwendet werden kann.
 
 ### Komponenten ein-/ausblenden
 

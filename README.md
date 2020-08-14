@@ -18,7 +18,16 @@ werden.
 
 ## Repo-Struktur
 
+Das Stammverzeichnis des Repositorys beinhaltet alles, was für eine Rekonstruktion des Systems notwendig ist. Es teilt sich in folgende Unterverzeichnisse auf.
 
+| Verzeichnis | Inhalt |
+|---|---|
+| [`/arduino`](/arduino/filamentextruder) | Arduino-Projekt, Liste der notwendigen Libraries, Anleitung zur notwendigen Modifikation der Nextion-Library |
+| [`/cad`](/cad) | CAD-Modell des fertigen Systems, `.stl`-Dateien der gedruckten Einzelteile |
+| [`/hmi`](/hmi) | `.HMI`-Datei und Anleitung zur Installation des Interfaces auf dem Nextion Display, Screenshots des Interfaces |
+
+Die hier abgelegten Daten entsprechen dem finalen Entwicklungsstand des Systems. Die **ausführliche Projektdokumentation**, in der die einzelnen Entwicklungsschritte 
+während des Projekts näher ausgeführt sind, ist als [Wiki dieses Repos](https://github.com/lukaswiesehan/filamentextruder/wiki) realisiert.
 
 ## Hardware
 
