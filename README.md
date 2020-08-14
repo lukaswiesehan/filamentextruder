@@ -7,6 +7,8 @@ Betreut von Prof. Dr. Dietmar Pähler.*
 - [Einführung](#einführung)
 - [Repo-Struktur](#repo-struktur)
 - [Hardware](#hardware)
+  - [Bestellliste](#bestellliste)
+  - [Verdrahtung des Systems](#verdrahtung-des-systems)
 
 ## Einführung
 
@@ -32,11 +34,15 @@ während des Projekts näher ausgeführt sind, ist als [Wiki dieses Repos](https
 ## Hardware
 
 Nachfolgend werden alle Komponenten aufgelistet, die bestellt werden müssen. Gehäuse- und Druckteile sind in [`/cad`](/cad) abgelegt und können auf unterschiedliche Weise gefertigt 
-werden, weshalb sie in der Kostenaufstellung nicht berücksichtigt werden.
+werden, weshalb sie in der Kostenaufstellung nicht berücksichtigt werden. Zudem werden Kabel zur Verdrahtung des Systems benötigt, die hier ebenfalls nicht aufgelistet sind.
+
+### Bestellliste
 
 | Anzahl | Bezeichnung | Beschreibung | Preis |
 |:---:| --- | --- |:---:|
 | 1x | [Felfil Evo Basic Kit](https://felfil.com/shop/felfil-evo-basic-kit/?v=5ea34fa833a1) | Basiskomponenten des Extruders als Bausatz | 299,00€ |
+| 1x | [Kaltgeräte-Einbaubuchse](https://www.conrad.de/de/p/kaltgeraete-steckverbinder-stecker-einbau-vertikal-gesamtpolzahl-2-pe-10-a-schwarz-1-st-501638.html) | Spannungsversorgung des Systems | 4,77€ |
+| 1x | [Kaltegeräte-Anschlusskabel](https://www.conrad.de/de/p/hawa-1008230-kaltgeraete-anschlusskabel-schwarz-2-00-m-621535.html) | Spannungsversorgung des Systems | 4,86€ |
 | 1x | [Netzteil 24V 320W](https://www.conrad.de/de/p/mean-well-rsp-320-24-ac-dc-netzteilbaustein-geschlossen-13-4-a-321-6-w-24-v-dc-1293056.html) | Primäre Spannungsquelle des Systems | 62,38€ |
 | 1x | [Spannungswandler XL4016](https://www.az-delivery.de/products/xl4016-step-down-buck-converter-dc-dc?_pos=5&_sid=a325961b4&_ss=r) | Spannungsversorgung der 12V-Komponenten (Extrudermotor & Lüfter) | 8,49€ |
 | 1x | [Spannungswandler LM2596S](https://www.az-delivery.de/products/lm2596s-dc-dc-step-down-modul-1?_pos=6&_sid=619fecdd6&_ss=r) | Spannungsversorgung der 5V-Komponenten (Display & Arduino) | 5,29€ |
@@ -49,6 +55,8 @@ werden, weshalb sie in der Kostenaufstellung nicht berücksichtigt werden.
 | 1x | [Nextion Display NX4024K032](https://www.amazon.de/MakerHawk-Nextion-NX4024K032-erweiterte-Versionen/dp/B072FN3SFH/) | Anzeige und Touch-Interface zur Steuerung des Systems | 38,44€ |
 | 1x | [Arduino Mega](https://www.az-delivery.de/products/mega-2560-r3-board-mit-atmega2560-100-arduino-kompatibel-ohne-usb-kabel?_pos=15&_sid=7e3e6e2d1&_ss=r) | Steuerung des Extruder-Systems und des HMI | 13,79€ |
 
-Die Hardware-Kosten summieren sich damit auf **625,40€** zzgl. diverser Versandkosten sowie der Gehäuse- bzw. Druckteile.
+Die Hardware-Kosten summieren sich damit auf **635,03€** zzgl. diverser Versandkosten sowie der Gehäuse- bzw. Druckteile.
 
+### Verdrahtung des Systems
 
+tbd
