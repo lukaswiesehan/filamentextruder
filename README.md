@@ -18,6 +18,12 @@ fehlgeschlagene Druckteile zu schreddern, um sie erneut zu Filament zu extrudier
 auch die Verarbeitbarkeit unter häufigem Aufschmelzen leiden, soll das mit der Anlage hergestellte Filament lediglich für den Druck von Prototypen verwendet
 werden.
 
+###### Funktionsschema <!-- omit in toc -->
+![Funktionsschema](/funktionsschema.png "Funktionsschema")
+
+Die im Funktionsschema grün dargestellten Elemente sind Teil dieses Projekts. Die Konstruktion eines Schredders ist im Rahmen dieses Projekts nicht möglich, allerdings
+kann das System in Folgeprojekten durchaus mit einem Schredder erweitert werden, der auf den Trichter des Extruders aufgesetzt werden sollte.
+
 ## Repo-Struktur
 
 Das Stammverzeichnis des Repositorys beinhaltet alles, was für eine Rekonstruktion des Systems notwendig ist. Es teilt sich in folgende Unterverzeichnisse auf.
