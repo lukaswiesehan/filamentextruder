@@ -89,6 +89,6 @@ bool setText(String buffer);
 ```c++
 bool NexText::setText(String buffer)
 {
-  [...]  
+  ...
 }
 ```
