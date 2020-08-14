@@ -15,6 +15,8 @@ Realisierung des HMI verwendet wird.
 
 ## Repo-Struktur
 
+tbd
+
 ## Hardware
 
 Nachfolgend werden alle Komponenten aufgelistet, die bestellt werden müssen. Gehäuse- und Druckteile sind in [`/cad`](/cad) abgelegt und können auf unterschiedliche Weise gefertigt 

@@ -6,6 +6,7 @@ Die Temperaturregelung des Extruders erfolgt mithilfe eines Software-PID-Reglers
 steuern kann, welche per PWM-Signal angesprochen werden.
 
 - [Finite State Machine](#finite-state-machine)
+- [Benötigte Libraries](#benötigte-libraries)
 - [Nextion Library Setup](#nextion-library-setup)
   - [Konfiguration](#konfiguration)
   - [Komponenten ein-/ausblenden](#komponenten-ein-ausblenden)
@@ -17,6 +18,10 @@ Die State Machine, die als Basis der Steuerung dient, kann wie folgt vereinfacht
 
 ###### Finite State Machine <!-- omit in toc -->
 ![Finite State Machine](/arduino/filamentextruder/fsm_scheme.png?raw=true "Finite State Machine")
+
+## Benötigte Libraries
+
+tbd
 
 ## Nextion Library Setup
 
