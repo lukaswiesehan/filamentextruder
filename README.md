@@ -31,93 +31,9 @@ werden, weshalb sie in der Kostenaufstellung nicht berücksichtigt werden.
 | 3x | [Heizpatrone 24V](https://www.conrad.de/de/p/24v-40w-heizpatrone-j-head-hotend-heater-cartridge-3d-drucker-802287254.html) | Heizmodule des Extruders | 4,50€ |
 | 1x | [Temperatursensor PT100](https://www.conrad.de/de/p/heraeus-nexensos-w-eyk-6-pt100-platin-temperatursensor-40-bis-500-c-100-3850-ppm-k-172412.html) | Sensor zur Bestimmung der Extrudertemperatur | 15,03€ |
 | 1x | [Adafruit MAX31865](https://www.conrad.de/de/p/adafruit-pt1000-rtd-temperature-sensor-amplifier-max31865-802235187.html) | Modul zur Wandlung des Sensorsignals des PT100 | 19,33€ |
+| 2x | [Schrittmotortreiber SMD356C](https://www.conrad.de/de/p/waveshare-smd356c-three-phase-hybrid-stepper-motor-driver-806805951.html) | Steuerung der Wicklungsmotoren | 41,44€ |
+| 2x | [Schrittmotor NEMA-17](https://www.conrad.de/de/p/joy-it-schrittmotor-nema-17-01-nema-17-01-0-4-nm-1-68-a-wellen-durchmesser-5-mm-1597325.html) | Antriebe des Wicklungsmechanismus | 27,20€ |
 
-Die Hardware-Kosten summieren sich damit auf **435,89€** zzgl. diverser Versandkosten sowie der Gehäuse- bzw. Druckteile.
+Die Hardware-Kosten summieren sich damit auf **573,17€** zzgl. diverser Versandkosten sowie der Gehäuse- bzw. Druckteile.
 
-## Nextion Library Setup
-
-### Konfiguration
-
-Zur einfachen Kommunikation zwischen Display und Arduino wird die offizielle 
-[Nextion Library](https://github.com/itead/ITEADLIB_Arduino_Nextion) verwendet.
-Damit diese auch mit einem Arduino Uno/Nano verwendet werden kann, muss die 
-`NexConfig.h` angepasst werden, da kleinere Arduino Boards nur einen Hardware Serial Kanal 
-besitzen.
-
-###### NexConfig.h bearbeiten
-```c++
-//#define DEBUG_SERIAL_ENABLE
-//#define dbSerial Serial
-#define nexSerial Serial
-```
-
-Es wird also der Debug-Serial abgeschaltet, damit der einzige Serial-Kanal des Arduinos für 
-die Kommunikation mit dem Display verwendet werden kann.
-
-### Komponenten ein-/ausblenden
-
-Weiterhin werden der `NexButton`- und der `NexPicture`-Klasse Methoden hinzugefügt, die es
-ermöglichen, diese Komponenten ein- bzw. auszublenden.
-
-###### NexButton.h erweitern
-```c++
-bool hide();
-bool show();
-```
-
-###### NexButton.cpp erweitern
-```c++
-bool NexButton::hide()
-{
-  String cmd;
-
-  cmd += "vis ";
-  cmd += getObjName();
-  cmd += ",0";
-  sendCommand(cmd.c_str());
-  return recvRetCommandFinished();
-}
-
-bool NexButton::show()
-{
-  String cmd;
-
-  cmd += "vis ";
-  cmd += getObjName();
-  cmd += ",1";
-  sendCommand(cmd.c_str());
-  return recvRetCommandFinished();
-}
-```
-
-###### NexPicture.h erweitern
-```c++
-bool hide();
-bool show();
-```
-
-###### NexPicture.cpp erweitern
-```c++
-bool NexPicture::hide()
-{
-  String cmd;
-
-  cmd += "vis ";
-  cmd += getObjName();
-  cmd += ",0";
-  sendCommand(cmd.c_str());
-  return recvRetCommandFinished();
-}
-
-bool NexPicture::show()
-{
-  String cmd;
-
-  cmd += "vis ";
-  cmd += getObjName();
-  cmd += ",1";
-  sendCommand(cmd.c_str());
-  return recvRetCommandFinished();
-}
-```
 
