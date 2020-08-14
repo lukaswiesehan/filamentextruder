@@ -10,12 +10,15 @@ Betreut von Prof. Dr. Dietmar Pähler.*
 
 ## Einführung
 
-Die Steuerung des Extruders erfolgt mittels Arduino, wobei ein Nextion Display zur 
-Realisierung des HMI verwendet wird.
+Im Rahmen des Bachelorprojekts im 5. Semester des Bachelorstudiengangs Mechatronik an der HAW Hamburg soll eine Anlage konstruiert und realisiert werden, 
+die aus Kunststoffgranulat 3D-Druck Filament extrudiert und dieses auf entsprechende Rollen aufspult. Übergeordnetes Ziel ist es, Prototypen oder 
+fehlgeschlagene Druckteile zu schreddern, um sie erneut zu Filament zu extrudieren und dieses erneut zu verwenden. Da sowohl die Qualität des Kunststoffs, als
+auch die Verarbeitbarkeit unter häufigem Aufschmelzen leiden, soll das mit der Anlage hergestellte Filament lediglich für den Druck von Prototypen verwendet
+werden.
 
 ## Repo-Struktur
 
-tbd
+
 
 ## Hardware
 
