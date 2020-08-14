@@ -7,3 +7,8 @@ Das Interface läuft auf einem [Nextion NX4024K032](https://nextion.tech/datashe
 Wesentlichen den States der [FSM in der Steuerung](https://github.com/lukaswiesehan/filamentextruder/tree/master/arduino/filamentextruder#finite-state-machine) 
 entsprechen. In [/screenshots](https://github.com/lukaswiesehan/filamentextruder/tree/master/hmi/screenshots) können die einzelnen
 Seiten angeschaut werden.
+
+## Font Awesome Icons
+
+Alle im Interface verwendeten Icons stammen aus dem kostenlosen Symbolsatz von [Font Awesome](https://fontawesome.com/). Sie wurden
+über die entsprechenden `.otf`-Dateien eingebunden, die unter [SIL OFL 1.1](https://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL) lizensiert sind.
