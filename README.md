@@ -32,7 +32,9 @@ werden, weshalb sie in der Kostenaufstellung nicht berücksichtigt werden.
 | 1x | [Adafruit MAX31865](https://www.conrad.de/de/p/adafruit-pt1000-rtd-temperature-sensor-amplifier-max31865-802235187.html) | Modul zur Wandlung des Sensorsignals des PT100 | 19,33€ |
 | 2x | [Schrittmotortreiber SMD356C](https://www.conrad.de/de/p/waveshare-smd356c-three-phase-hybrid-stepper-motor-driver-806805951.html) | Steuerung der Wicklungsmotoren | 41,44€ |
 | 2x | [Schrittmotor NEMA-17](https://www.conrad.de/de/p/joy-it-schrittmotor-nema-17-01-nema-17-01-0-4-nm-1-68-a-wellen-durchmesser-5-mm-1597325.html) | Antriebe des Wicklungsmechanismus | 27,20€ |
+| 1x | [Nextion Display NX4024K032](https://www.amazon.de/MakerHawk-Nextion-NX4024K032-erweiterte-Versionen/dp/B072FN3SFH/) | Anzeige und Touch-Interface zur Steuerung des Systems | 38,44€ |
+| 1x | [Arduino Mega](https://www.az-delivery.de/products/mega-2560-r3-board-mit-atmega2560-100-arduino-kompatibel-ohne-usb-kabel?_pos=15&_sid=7e3e6e2d1&_ss=r) | Steuerung des Extruder-Systems und des HMI | 13,79€ |
 
-Die Hardware-Kosten summieren sich damit auf **573,17€** zzgl. diverser Versandkosten sowie der Gehäuse- bzw. Druckteile.
+Die Hardware-Kosten summieren sich damit auf **625,40€** zzgl. diverser Versandkosten sowie der Gehäuse- bzw. Druckteile.
 
 
