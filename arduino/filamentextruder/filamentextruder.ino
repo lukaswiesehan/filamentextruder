@@ -4,12 +4,12 @@
 //Define defaults
 #define NOMINAL_TEMP 165
 #define WINDUP_SPEED 3.00
-#define SPOOL_WIDTH 70
-#define SPOOL_INNER_DIAMETER 80
+#define SPOOL_WIDTH 73
+#define SPOOL_INNER_DIAMETER 100
 #define SPOOL_OUTER_DIAMETER 200
 
 //Declare Extruder FSM states
-enum states {initialize, refStep, idle, heatup, ready, extrude, windUp};
+enum states {initialize, refStep, idle, settings, heatup, ready, extrude, windUp};
 states currentState = initialize;
 
 //Declare extruder process variables
@@ -67,6 +67,34 @@ NexNumber windup_nNominalTemp(4, 10, "nNominalTemp");
 NexText windup_tSpeed(4, 16, "tSpeed");
 NexNumber windup_nActualTemp(4, 4, "nActualTemp");
 NexProgressBar windup_jTempBar(4, 3, "jTempBar");
+//Page 5: settings
+NexPage settingsPage(5, 0, "settings");
+NexButton settings_bSave(5, 33, "bSave");
+NexButton settings_bTempMinus5(5, 2, "bTempMinus5");
+NexButton settings_bTempMinus1(5, 4, "bTempMinus1");
+NexButton settings_bTempPlus1(5, 5, "bTempPlus1");
+NexButton settings_bTempPlus5(5, 3, "bTempPlus5");
+NexButton settings_bSpeedMin01(5, 9, "bSpeedMin01");
+NexButton settings_bSpeedMin001(5, 11, "bSpeedMin001");
+NexButton settings_bSpeedPlus001(5, 12, "bSpeedPlus001");
+NexButton settings_bSpeedPlus01(5, 10, "bSpeedPlus01");
+NexButton settings_bWidthMinus5(5, 15, "bWidthMinus5");
+NexButton settings_bWidthMinus1(5, 17, "bWidthMinus1");
+NexButton settings_bWidthPlus1(5, 18, "bWidthPlus1");
+NexButton settings_bWidthPlus5(5, 16, "bWidthPlus5");
+NexButton settings_bInnerMinus5(5, 21, "bInnerMinus5");
+NexButton settings_bInnerMinus1(5, 23, "bInnerMinus1");
+NexButton settings_bInnerPlus1(5, 24, "bInnerPlus1");
+NexButton settings_bInnerPlus5(5, 22, "bInnerPlus5");
+NexButton settings_bOuterMinus5(5, 27, "bOuterMinus5");
+NexButton settings_bOuterMinus1(5, 29, "bOuterMinus1");
+NexButton settings_bOuterPlus1(5, 30, "bOuterPlus1");
+NexButton settings_bOuterPlus5(5, 28, "bOuterPlus5");
+NexNumber settings_nTemp(5, 7, "nTemp");
+NexText settings_tSpeed(5, 14, "tSpeed");
+NexText settings_tWidth(5, 20, "tWidth");
+NexText settings_tInnerDia(5, 26, "tInnerDia");
+NexText settings_tOuterDia(5, 32, "tOuterDia");
 
 //Create touch event list
 NexTouch *nexListenList[] = {
@@ -96,6 +124,28 @@ NexTouch *nexListenList[] = {
   &windup_bSpeedMin001,
   &windup_bSpeedPlus01,
   &windup_bSpeedPlus001,
+  //Page 5: settings
+  &settings_bSave,
+  &settings_bTempMinus5,
+  &settings_bTempMinus1,
+  &settings_bTempPlus1,
+  &settings_bTempPlus5,
+  &settings_bSpeedMin01,
+  &settings_bSpeedMin001,
+  &settings_bSpeedPlus001,
+  &settings_bSpeedPlus01,
+  &settings_bWidthMinus5,
+  &settings_bWidthMinus1,
+  &settings_bWidthPlus1,
+  &settings_bWidthPlus5,
+  &settings_bInnerMinus5,
+  &settings_bInnerMinus1,
+  &settings_bInnerPlus1,
+  &settings_bInnerPlus5,
+  &settings_bOuterMinus5,
+  &settings_bOuterMinus1,
+  &settings_bOuterPlus1,
+  &settings_bOuterPlus5,
   NULL
 };
 
@@ -108,7 +158,14 @@ void idle_bHeatup_callback() {
   dbSerialPrintln("currentState = heatup");
 }
 void idle_bSettings_callback() {
-  //show settings page...
+  settingsPage.show();
+  currentState = settings;
+  settings_nTemp.setValue(nominalTemp);
+  settings_tSpeed.setText(String(windUpSpeed).substring(0, 4) + " RPM");
+  settings_tWidth.setText(String(spoolWidth) + "mm");
+  settings_tInnerDia.setText(String(spoolInnerDiameter) + "mm");
+  settings_tOuterDia.setText(String(spoolOuterDiameter) + "mm");
+  dbSerialPrintln("currentState = settings");
 }
 //Page 2: heatup
 void heatup_bCooldown_callback() {
@@ -201,6 +258,92 @@ void windup_bSpeedPlus001_callback() {
   windUpSpeed += 0.01;
   windup_tSpeed.setText(String(windUpSpeed).substring(0, 4) + " RPM");
 }
+//Page 5: settings
+void settings_bSave_callback() {
+  idlePage.show();
+  currentState = idle;
+  dbSerialPrintln("currentState = idle");
+}
+void settings_bTempMinus5_callback() {
+  nominalTemp -= 5;
+  settings_nTemp.setValue(nominalTemp);
+}
+void settings_bTempMinus1_callback() {
+  nominalTemp -= 1;
+  settings_nTemp.setValue(nominalTemp);
+}
+void settings_bTempPlus1_callback() {
+  nominalTemp += 1;
+  settings_nTemp.setValue(nominalTemp);
+}
+void settings_bTempPlus5_callback() {
+  nominalTemp += 5;
+  settings_nTemp.setValue(nominalTemp);
+}
+void settings_bSpeedMin01_callback() {
+  windUpSpeed -= 0.1;
+  settings_tSpeed.setText(String(windUpSpeed).substring(0, 4) + " RPM");
+}
+void settings_bSpeedMin001_callback() {
+  windUpSpeed -= 0.01;
+  settings_tSpeed.setText(String(windUpSpeed).substring(0, 4) + " RPM");
+}
+void settings_bSpeedPlus001_callback() {
+  windUpSpeed += 0.01;
+  settings_tSpeed.setText(String(windUpSpeed).substring(0, 4) + " RPM");
+}
+void settings_bSpeedPlus01_callback() {
+  windUpSpeed += 0.1;
+  settings_tSpeed.setText(String(windUpSpeed).substring(0, 4) + " RPM");
+}
+void settings_bWidthMinus5_callback() {
+  spoolWidth -= 5;
+  settings_tWidth.setText(String(spoolWidth) + "mm");
+}
+void settings_bWidthMinus1_callback() {
+  spoolWidth -= 1;
+  settings_tWidth.setText(String(spoolWidth) + "mm");
+}
+void settings_bWidthPlus1_callback() {
+  spoolWidth += 1;
+  settings_tWidth.setText(String(spoolWidth) + "mm");
+}
+void settings_bWidthPlus5_callback() {
+  spoolWidth += 5;
+  settings_tWidth.setText(String(spoolWidth) + "mm");
+}
+void settings_bInnerMinus5_callback() {
+  spoolInnerDiameter -= 5;
+  settings_tInnerDia.setText(String(spoolInnerDiameter) + "mm");
+}
+void settings_bInnerMinus1_callback() {
+  spoolInnerDiameter -= 1;
+  settings_tInnerDia.setText(String(spoolInnerDiameter) + "mm");
+}
+void settings_bInnerPlus1_callback() {
+  spoolInnerDiameter += 1;
+  settings_tInnerDia.setText(String(spoolInnerDiameter) + "mm");
+}
+void settings_bInnerPlus5_callback() {
+  spoolInnerDiameter += 5;
+  settings_tInnerDia.setText(String(spoolInnerDiameter) + "mm");
+}
+void settings_bOuterMinus5_callback() {
+  spoolOuterDiameter -= 5;
+  settings_tOuterDia.setText(String(spoolOuterDiameter) + "mm");
+}
+void settings_bOuterMinus1_callback() {
+  spoolOuterDiameter -= 1;
+  settings_tOuterDia.setText(String(spoolOuterDiameter) + "mm");
+}
+void settings_bOuterPlus1_callback() {
+  spoolOuterDiameter += 1;
+  settings_tOuterDia.setText(String(spoolOuterDiameter) + "mm");
+}
+void settings_bOuterPlus5_callback() {
+  spoolOuterDiameter += 5;
+  settings_tOuterDia.setText(String(spoolOuterDiameter) + "mm");
+}
 
 //Define state machine evaluations
 void evalStates() {
@@ -226,6 +369,8 @@ void evalStates() {
       dbSerialPrintln("currentState = idle");
       break;
     case idle:
+      break;
+    case settings:
       break;
     case heatup:
       delay(5000);
@@ -281,6 +426,28 @@ void setup() {
   windup_bSpeedMin001.attachPop(windup_bSpeedMin001_callback);
   windup_bSpeedPlus01.attachPop(windup_bSpeedPlus01_callback);
   windup_bSpeedPlus001.attachPop(windup_bSpeedPlus001_callback);
+  //Page 5: settings
+  settings_bSave.attachPop(settings_bSave_callback);
+  settings_bTempMinus5.attachPop(settings_bTempMinus5_callback);
+  settings_bTempMinus1.attachPop(settings_bTempMinus1_callback);
+  settings_bTempPlus1.attachPop(settings_bTempPlus1_callback);
+  settings_bTempPlus5.attachPop(settings_bTempPlus5_callback);
+  settings_bSpeedMin01.attachPop(settings_bSpeedMin01_callback);
+  settings_bSpeedMin001.attachPop(settings_bSpeedMin001_callback);
+  settings_bSpeedPlus001.attachPop(settings_bSpeedPlus001_callback);
+  settings_bSpeedPlus01.attachPop(settings_bSpeedPlus01_callback);
+  settings_bWidthMinus5.attachPop(settings_bWidthMinus5_callback);
+  settings_bWidthMinus1.attachPop(settings_bWidthMinus1_callback);
+  settings_bWidthPlus1.attachPop(settings_bWidthPlus1_callback);
+  settings_bWidthPlus5.attachPop(settings_bWidthPlus5_callback);
+  settings_bInnerMinus5.attachPop(settings_bInnerMinus5_callback);
+  settings_bInnerMinus1.attachPop(settings_bInnerMinus1_callback);
+  settings_bInnerPlus1.attachPop(settings_bInnerPlus1_callback);
+  settings_bInnerPlus5.attachPop(settings_bInnerPlus5_callback);
+  settings_bOuterMinus5.attachPop(settings_bOuterMinus5_callback);
+  settings_bOuterMinus1.attachPop(settings_bOuterMinus1_callback);
+  settings_bOuterPlus1.attachPop(settings_bOuterPlus1_callback);
+  settings_bOuterPlus5.attachPop(settings_bOuterPlus5_callback);
 }
 
 void loop() {
