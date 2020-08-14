@@ -5,6 +5,13 @@ Vom Arduino Nano wird allerdings abgeraten, da der Variablenspeicher nur knapp a
 Die Temperaturregelung des Extruders erfolgt mithilfe eines Software-PID-Reglers, der die Leistung der Heizpatronen über Mosfets
 steuern kann, welche per PWM-Signal angesprochen werden.
 
+## Finite State Machine
+
+Die State Machine, die als Basis der Steuerung dient, kann wie folgt vereinfacht dargestellt werden.
+
+###### Finite State Machine
+![Finite State Machine](/arduino/filamentextruder/fsm_scheme.png?raw=true "Finite State Machine")
+
 ## Nextion Library Setup
 
 Zur einfachen Kommunikation zwischen Display und Arduino wird die offizielle 
@@ -13,7 +20,7 @@ Für eine fehlerfreie Einbindung in das Projekt sind einige Änderungen an der B
 
 ### Konfiguration
 
-Damit diese auch mit einem Arduino Uno/Nano verwendet werden kann, muss die 
+Falls das System mit einem Arduino Uno/Nano gesteuert werden soll, muss die 
 `NexConfig.h` angepasst werden, da kleinere Arduino Boards nur einen Hardware Serial Kanal 
 besitzen.
 

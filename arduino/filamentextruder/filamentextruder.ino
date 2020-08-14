@@ -8,8 +8,11 @@
 #define SPOOL_INNER_DIAMETER 100
 #define SPOOL_OUTER_DIAMETER 200
 
+//Define allowed temperature deviation
+#define ALLOWED_TEMP_DEVIATION 2
+
 //Declare Extruder FSM states
-enum states {initialize, refStep, idle, settings, heatup, ready, extrude, windUp};
+enum states {initialize, refStep, idle, settings, heatup, ready, extrude, windup};
 states currentState = initialize;
 
 //Declare extruder process variables
@@ -209,10 +212,10 @@ void extrude_bPauseExt_callback() {
 }
 void extrude_bStartWind_callback() {
   windupPage.show();
-  currentState = windUp;
+  currentState = windup;
   windup_tSpeed.setText(String(windUpSpeed).substring(0, 4) + " RPM");
   windup_nNominalTemp.setValue(nominalTemp);
-  dbSerialPrintln("currentState = windUp");
+  dbSerialPrintln("currentState = windup");
 }
 void extrude_bTempMinus1_callback() {
   nominalTemp -= 1;
@@ -375,7 +378,7 @@ void evalStates() {
     case heatup:
       delay(5000);
       actualTemp = nominalTemp;
-      if(actualTemp == nominalTemp) {
+      if(actualTemp >= nominalTemp - ALLOWED_TEMP_DEVIATION && actualTemp <= nominalTemp + ALLOWED_TEMP_DEVIATION) {
         heatup_bStartExt.show();
         heatup_tReady.show();
         currentState = ready;
@@ -383,10 +386,28 @@ void evalStates() {
       }
       break;
     case ready:
+      if(actualTemp > nominalTemp + ALLOWED_TEMP_DEVIATION || actualTemp < nominalTemp - ALLOWED_TEMP_DEVIATION) {
+        heatup_bStartExt.hide();
+        heatup_tReady.hide();
+        currentState = heatup;
+        dbSerialPrintln("currentState = heatup");
+      }
       break;
     case extrude:
+      if(actualTemp > nominalTemp + ALLOWED_TEMP_DEVIATION || actualTemp < nominalTemp - ALLOWED_TEMP_DEVIATION) {
+        heatup_bStartExt.hide();
+        heatup_tReady.hide();
+        currentState = heatup;
+        dbSerialPrintln("currentState = heatup");
+      }
       break;
-    case windUp:
+    case windup:
+      if(actualTemp > nominalTemp + ALLOWED_TEMP_DEVIATION || actualTemp < nominalTemp - ALLOWED_TEMP_DEVIATION) {
+        heatup_bStartExt.hide();
+        heatup_tReady.hide();
+        currentState = heatup;
+        dbSerialPrintln("currentState = heatup");
+      }
       break;
     default:
       break;
@@ -454,4 +475,3 @@ void loop() {
   evalStates();
   nexLoop(nexListenList);
 }
-
