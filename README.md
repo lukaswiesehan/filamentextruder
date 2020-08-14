@@ -1,13 +1,13 @@
-# Filament Extruder
+# Filament-Extruder
 
 Bachelorprojekt im Studiengang Mechatronik, HAW Hamburg.  
 *Entwickelt von Tobias Freytag, Anton Neike, Max Sahlke, Lukas Wiesehan.  
 Betreut von Prof. Dr. Dietmar Pähler.*
 
-1. [Einführung](#einführung)
-2. [Repo-Struktur](#repo-struktur)
-3. [Hardware](#hardware)
-4. [Nextion Library Setup](#nextion-library-setup)
+- [Filament-Extruder](#filament-extruder)
+  - [Einführung](#einführung)
+  - [Repo-Struktur](#repo-struktur)
+  - [Hardware](#hardware)
 
 ## Einführung
 
