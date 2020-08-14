@@ -1,18 +1,21 @@
-# Arduino-Code
+# Arduino-Code <!-- omit in toc -->
 
 Die Steuerung des Systems ist als *Finite State Machine* umgesetzt und läuft grundsätzlich auf allen gängigen Arduinos.
 Vom Arduino Nano wird allerdings abgeraten, da der Variablenspeicher nur knapp ausreicht, was Performance-Nachteile mit sich bringen kann.
 Die Temperaturregelung des Extruders erfolgt mithilfe eines Software-PID-Reglers, der die Leistung der Heizpatronen über Mosfets
 steuern kann, welche per PWM-Signal angesprochen werden.
 
-1. [Finite State Machine](#finite-state-machine)
-2. [Nextion Library Setup](#nextion-library-setup)
+- [Finite State Machine](#finite-state-machine)
+- [Nextion Library Setup](#nextion-library-setup)
+  - [Konfiguration](#konfiguration)
+  - [Komponenten ein-/ausblenden](#komponenten-ein-ausblenden)
+  - [Text bearbeiten](#text-bearbeiten)
 
 ## Finite State Machine
 
 Die State Machine, die als Basis der Steuerung dient, kann wie folgt vereinfacht dargestellt werden. 
 
-###### Finite State Machine
+###### Finite State Machine <!-- omit in toc -->
 ![Finite State Machine](/arduino/filamentextruder/fsm_scheme.png?raw=true "Finite State Machine")
 
 ## Nextion Library Setup
@@ -27,7 +30,7 @@ Falls das System mit einem Arduino Uno/Nano gesteuert werden soll, muss die
 `NexConfig.h` angepasst werden, da kleinere Arduino Boards nur einen Hardware Serial Kanal 
 besitzen.
 
-###### NexConfig.h bearbeiten
+###### NexConfig.h bearbeiten <!-- omit in toc -->
 ```c++
 //#define DEBUG_SERIAL_ENABLE
 //#define dbSerial Serial
@@ -42,13 +45,13 @@ die Kommunikation mit dem Display verwendet werden kann.
 Weiterhin werden der `NexButton`- und der `NexPicture`-Klasse Methoden hinzugefügt, die es
 ermöglichen, diese Komponenten ein- bzw. auszublenden.
 
-###### NexButton.h erweitern
+###### NexButton.h erweitern <!-- omit in toc -->
 ```c++
 bool hide();
 bool show();
 ```
 
-###### NexButton.cpp erweitern
+###### NexButton.cpp erweitern <!-- omit in toc -->
 ```c++
 bool NexButton::hide()
 {
@@ -80,12 +83,12 @@ Analog zu den Erweiterungen der `NexButton`-Klasse wird auch die `NexPicture`-Kl
 Zudem wird die Methode `NexText.setText()` so verändert, dass zum Senden an das Display keine 
 Konvertierung in Char-Arrays mehr vorgenommen werden muss.
 
-###### NexText.h bearbeiten
+###### NexText.h bearbeiten <!-- omit in toc -->
 ```c++
 bool setText(String buffer);   
 ```
 
-###### NexText.cpp bearbeiten
+###### NexText.cpp bearbeiten <!-- omit in toc -->
 ```c++
 bool NexText::setText(String buffer)
 {

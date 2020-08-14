@@ -1,13 +1,12 @@
-# Filament-Extruder
+# Filament-Extruder <!-- omit in toc -->
 
 Bachelorprojekt im Studiengang Mechatronik, HAW Hamburg.  
 *Entwickelt von Tobias Freytag, Anton Neike, Max Sahlke, Lukas Wiesehan.  
 Betreut von Prof. Dr. Dietmar Pähler.*
 
-- [Filament-Extruder](#filament-extruder)
-  - [Einführung](#einführung)
-  - [Repo-Struktur](#repo-struktur)
-  - [Hardware](#hardware)
+- [Einführung](#einführung)
+- [Repo-Struktur](#repo-struktur)
+- [Hardware](#hardware)
 
 ## Einführung
 
@@ -18,7 +17,7 @@ Realisierung des HMI verwendet wird.
 
 ## Hardware
 
-Nachfolgend werden alle Komponenten aufgelistet, die bestellt werden müssen. Gehäuse- und Druckteile sind in [/cad]() abgelegt und können auf unterschiedliche Weise gefertigt 
+Nachfolgend werden alle Komponenten aufgelistet, die bestellt werden müssen. Gehäuse- und Druckteile sind in [`/cad`](/cad) abgelegt und können auf unterschiedliche Weise gefertigt 
 werden, weshalb sie in der Kostenaufstellung nicht berücksichtigt werden.
 
 | Anzahl | Bezeichnung | Beschreibung | Preis |
