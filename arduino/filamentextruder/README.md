@@ -1,7 +1,6 @@
 # Arduino-Code <!-- omit in toc -->
 
-Die Steuerung des Systems ist als *Finite State Machine* umgesetzt und läuft grundsätzlich auf allen gängigen Arduinos.
-Vom Arduino Nano wird allerdings abgeraten, da der Variablenspeicher nur knapp ausreicht, was Performance-Nachteile mit sich bringen kann.
+Die Steuerung des Systems ist als *Finite State Machine* umgesetzt und läuft auf einem Arduino Mega.
 Die Temperaturregelung des Extruders erfolgt mithilfe eines Software-PID-Reglers, der die Leistung der Heizpatronen über Mosfets
 steuern kann, welche per PWM-Signal angesprochen werden.
 
