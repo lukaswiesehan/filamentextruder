@@ -1,5 +1,7 @@
 # Filament-Extruder <!-- omit in toc -->
 
+<p align="center"><img src="/rendering.png?raw=true" alt="HMI Preview"></p>
+
 Bachelorprojekt im Studiengang Mechatronik, HAW Hamburg.  
 *Entwickelt von Tobias Freytag, Anton Neike, Max Sahlke, Lukas Wiesehan.  
 Betreut von Prof. Dr. Dietmar Pähler.*
