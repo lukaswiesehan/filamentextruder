@@ -22,10 +22,6 @@ Die State Machine, die als Basis der Steuerung dient, kann wie folgt vereinfacht
 
 tbd
 
-## Konfiguration des Systems
-
-tbd
-
 ## Nextion Library Setup
 
 Zur einfachen Kommunikation zwischen Display und Arduino wird die offizielle 
@@ -34,7 +30,7 @@ Für eine fehlerfreie Einbindung in das Projekt sind einige Änderungen an der B
 
 ### Komponenten ein-/ausblenden
 
-Weiterhin werden der `NexButton`- und der `NexPicture`-Klasse Methoden hinzugefügt, die es
+Der `NexButton`-, `NexText` und der `NexPicture`-Klasse Methoden werden hinzugefügt, die es
 ermöglichen, diese Komponenten ein- bzw. auszublenden.
 
 ###### NexButton.h erweitern <!-- omit in toc -->
@@ -68,7 +64,7 @@ bool NexButton::show()
 }
 ```
 
-Analog zu den Erweiterungen der `NexButton`-Klasse wird auch die `NexPicture`-Klasse erweitert.
+Analog zu den Erweiterungen der `NexButton`-Klasse werden auch die `NexText`- und die `NexPicture`-Klasse erweitert.
 
 ### Text bearbeiten
 
@@ -87,3 +83,7 @@ bool NexText::setText(String buffer)
   ...
 }
 ```
+
+## Konfiguration des Systems
+
+tbd
