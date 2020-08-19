@@ -536,8 +536,8 @@ void evalStates() {
         windupSpeed = EXTRUSION_FEED / ((SPOOL_INNER_DIAMETER + currentLayer * 2 * FILAMENT_DIAMETER) * M_PI) * 60; //[1/min]
         stepsPerSecond = windupSpeed / 60 * STEPS_PER_REVOLUTION; //[1/s]
         if(stepperGuide.currentPosition() == 0) {
-          stepperGuide.moveTo(- STEPS_PER_REVOLUTION * turnsPerLayer + FILAMENT_DIAMETER / 2);
-          stepperGuide.setSpeed(- stepsPerSecond);
+          stepperGuide.moveTo(-STEPS_PER_REVOLUTION * turnsPerLayer + FILAMENT_DIAMETER / 2);
+          stepperGuide.setSpeed(-stepsPerSecond);
         } else {
           stepperGuide.moveTo(0);
           stepperGuide.setSpeed(stepsPerSecond);
