@@ -2,16 +2,23 @@
 #include "Nextion.h"
 #include <Adafruit_MAX31865.h>
 #include <PID_v1.h>
+#include <AccelStepper.h>
+#include <math.h>
 
 //Define defaults
-#define NOMINAL_TEMP 165
-#define WINDUP_SPEED 3.00
-#define SPOOL_WIDTH 73
-#define SPOOL_INNER_DIAMETER 100
-#define SPOOL_OUTER_DIAMETER 200
+#define NOMINAL_TEMP 165 //[°C]
+#define SPOOL_WIDTH 73 //[mm]
+#define SPOOL_PICKUP_DIAMETER 50 //[mm]
+#define SPOOL_INNER_DIAMETER 100 //[mm]
+#define SPOOL_OUTER_DIAMETER 200 //[mm]
 
-//Define allowed temperature deviation
-#define ALLOWED_TEMP_DEVIATION 2
+//Define other process parameters
+#define ALLOWED_TEMP_DEVIATION 2 //[°C]
+#define EXTRUSION_FEED 15.85935 //[mm/s]
+#define FILAMENT_DIAMETER 1.75 //[mm]
+#define ENDSTOP_OFFSET 4 //[mm]
+#define M12_PITCH 1.75 //[mm]
+#define STEPS_PER_REVOLUTION 6400L //[steps]
 
 //Define temperature sensor pins 
 #define MAX31865_CS 10
@@ -23,6 +30,18 @@
 #define HEATER_1 3
 #define HEATER_2 5
 #define HEATER_3 6
+
+//Define extruder motor pin 
+#define EXTRUDER_MOTOR 40
+
+//Define stepper motor pins
+#define STEPPER_SPOOL_STP 4
+#define STEPPER_SPOOL_DIR 5
+#define STEPPER_GUIDE_STP 6
+#define STEPPER_GUIDE_DIR 7
+
+//Define endstop pin 
+#define ENDSTOP 2
 
 //Define PT100 parameters
 #define RREF 430.0
@@ -38,19 +57,27 @@ enum states {initialize, refStep, idle, settings, heatup, ready, extrude, windup
 states currentState = initialize;
 
 //Declare extruder process variables
-int nominalTemp = NOMINAL_TEMP;
-int actualTemp = 0;
-float windUpSpeed = WINDUP_SPEED;
-int spoolWidth = SPOOL_WIDTH;
+int nominalTemp = NOMINAL_TEMP; //[°C]
+int actualTemp = 0; //[°C]
+int spoolWidth = SPOOL_WIDTH; 
+int spoolPickupDiameter = SPOOL_PICKUP_DIAMETER;
 int spoolInnerDiameter = SPOOL_INNER_DIAMETER;
 int spoolOuterDiameter = SPOOL_OUTER_DIAMETER;
 
 //Declare temperature sensor 
 Adafruit_MAX31865 pt100 = Adafruit_MAX31865(MAX31865_CS, MAX31865_DI, MAX31865_DO, MAX31865_CLK);
 
-//Declare PID
+//Declare PID output variable
 int heaterOutput;
 PID pid(&actualTemp, &heaterOutput, &nominalTemp, K_P, K_I, K_D, DIRECT);
+
+//Declare stepper motors and corresponding variables
+stepperSpool = AccelStepper(1, STEPPER_SPOOL_STP, STEPPER_SPOOL_DIR);
+stepperGuide = AccelStepper(1, STEPPER_GUIDE_STP, STEPPER_GUIDE_DIR);
+double windupSpeed = 0.0; //[1/min]
+int turnsPerLayer = 0;
+int stepsPerSecond = 0; //[1/s]
+int currentLayer = -1;
 
 //Declare Nextion objects
 //Page 0: init
@@ -203,12 +230,17 @@ void idle_bSettings_callback() {
 void heatup_bCooldown_callback() {
   idlePage.show();
   currentState = idle;
+  heaterOutput = 0;
+  analogWrite(HEATER_1, heaterOutput);
+  analogWrite(HEATER_2, heaterOutput);
+  analogWrite(HEATER_3, heaterOutput);
   dbSerialPrintln("currentState = idle");
 }
 void heatup_bStartExt_callback() {
   extrudePage.show();
   currentState = extrude;
   extrude_nNominalTemp.setValue(nominalTemp);
+  digitalWrite(EXTRUDER_MOTOR, HIGH);
   dbSerialPrintln("currentState = extrude");
 }
 void heatup_bTempMinus5_callback() {
@@ -231,11 +263,17 @@ void heatup_bTempPlus5_callback() {
 void extrude_bCooldown_callback() {
   idlePage.show();
   currentState = idle;
+  digitalWrite(EXTRUDER_MOTOR, LOW);
+  heaterOutput = 0;
+  analogWrite(HEATER_1, heaterOutput);
+  analogWrite(HEATER_2, heaterOutput);
+  analogWrite(HEATER_3, heaterOutput);
   dbSerialPrintln("currentState = idle");
 }
 void extrude_bPauseExt_callback() {
   heatupPage.show();
   currentState = heatup;
+  digitalWrite(EXTRUDER_MOTOR, LOW);
   heatup_nNominalTemp.setValue(nominalTemp);
   dbSerialPrintln("currentState = heatup");
 }
@@ -258,6 +296,11 @@ void extrude_bTempPlus1_callback() {
 void windup_bCooldown_callback() {
   idlePage.show();
   currentState = idle;
+  digitalWrite(EXTRUDER_MOTOR, LOW);
+  heaterOutput = 0;
+  analogWrite(HEATER_1, heaterOutput);
+  analogWrite(HEATER_2, heaterOutput);
+  analogWrite(HEATER_3, heaterOutput);
   dbSerialPrintln("currentState = idle");
 }
 void windup_bPauseWind_callback() {
@@ -275,23 +318,28 @@ void windup_bTempPlus1_callback() {
   windup_nNominalTemp.setValue(nominalTemp);
 }
 void windup_bSpeedMin01_callback() {
-  windUpSpeed -= 0.1;
-  windup_tSpeed.setText(String(windUpSpeed).substring(0, 4) + " RPM");
+  windupSpeed -= 0.1;
+  stepsPerSecond = windupSpeed / 60 * STEPS_PER_REVOLUTION; //[1/s]
+  windup_tSpeed.setText(String(windupSpeed).substring(0, 4) + " RPM");
 }
 void windup_bSpeedMin001_callback() {
-  windUpSpeed -= 0.01;
-  windup_tSpeed.setText(String(windUpSpeed).substring(0, 4) + " RPM");
+  windupSpeed -= 0.01;
+  stepsPerSecond = windupSpeed / 60 * STEPS_PER_REVOLUTION; //[1/s]
+  windup_tSpeed.setText(String(windupSpeed).substring(0, 4) + " RPM");
 }
 void windup_bSpeedPlus01_callback() {
-  windUpSpeed += 0.1;
-  windup_tSpeed.setText(String(windUpSpeed).substring(0, 4) + " RPM");
+  windupSpeed += 0.1;
+  stepsPerSecond = windupSpeed / 60 * STEPS_PER_REVOLUTION; //[1/s]
+  windup_tSpeed.setText(String(windupSpeed).substring(0, 4) + " RPM");
 }
 void windup_bSpeedPlus001_callback() {
-  windUpSpeed += 0.01;
-  windup_tSpeed.setText(String(windUpSpeed).substring(0, 4) + " RPM");
+  windupSpeed += 0.01;
+  stepsPerSecond = windupSpeed / 60 * STEPS_PER_REVOLUTION; //[1/s]
+  windup_tSpeed.setText(String(windupSpeed).substring(0, 4) + " RPM");
 }
 //Page 5: settings
 void settings_bSave_callback() {
+  initMotors();
   idlePage.show();
   currentState = idle;
   dbSerialPrintln("currentState = idle");
@@ -313,20 +361,20 @@ void settings_bTempPlus5_callback() {
   settings_nTemp.setValue(nominalTemp);
 }
 void settings_bSpeedMin01_callback() {
-  windUpSpeed -= 0.1;
-  settings_tSpeed.setText(String(windUpSpeed).substring(0, 4) + " RPM");
+  windupSpeed -= 0.1;
+  settings_tSpeed.setText(String(windupSpeed).substring(0, 4) + " RPM");
 }
 void settings_bSpeedMin001_callback() {
-  windUpSpeed -= 0.01;
-  settings_tSpeed.setText(String(windUpSpeed).substring(0, 4) + " RPM");
+  windupSpeed -= 0.01;
+  settings_tSpeed.setText(String(windupSpeed).substring(0, 4) + " RPM");
 }
 void settings_bSpeedPlus001_callback() {
-  windUpSpeed += 0.01;
-  settings_tSpeed.setText(String(windUpSpeed).substring(0, 4) + " RPM");
+  windupSpeed += 0.01;
+  settings_tSpeed.setText(String(windupSpeed).substring(0, 4) + " RPM");
 }
 void settings_bSpeedPlus01_callback() {
-  windUpSpeed += 0.1;
-  settings_tSpeed.setText(String(windUpSpeed).substring(0, 4) + " RPM");
+  windupSpeed += 0.1;
+  settings_tSpeed.setText(String(windupSpeed).substring(0, 4) + " RPM");
 }
 void settings_bWidthMinus5_callback() {
   spoolWidth -= 5;
@@ -388,7 +436,13 @@ void initPID() {
   pid.SetMode(AUTOMATIC);
 }
 void initMotors() {
-
+  pinMode(ENDSTOP, OUTPUT);
+  stepperSpool.setMaxSpeed(10000); //[steps/s]
+  stepperGuide.setMaxSpeed(10000); //[steps/s]
+  turnsPerLayer = spoolWidth / FILAMENT_DIAMETER;
+  windupSpeed = EXTRUSION_FEED / (SPOOL_INNER_DIAMETER * M_PI) * 60; //[1/min]
+  stepsPerSecond = windupSpeed / 60 * STEPS_PER_REVOLUTION; //[1/s]
+  stepperSpool.setCurrentPosition(0); //[steps]
 }
 
 //Define state machine evaluations
@@ -407,7 +461,16 @@ void evalStates() {
       dbSerialPrintln("currentState = refStep");
       break;
     case refStep:
-      delay(2000);
+      stepperGuide.setSpeed(10000); //[steps/s]
+      while(digitalRead(ENDSTOP) == LOW) {
+        stepperGuide.runSpeed();
+      }
+      stepperGuide.setCurrentPosition(ENDSTOP_OFFSET / M12_PITCH * STEPS_PER_REVOLUTION); //[steps]
+      stepperGuide.moveTo(0) //[steps]
+      stepperGuide.setSpeed(-1000); //[steps/s]
+      while(stepperGuide.isRunning()) {
+        stepperGuide.runSpeedToPosition()
+      }
       init_pRefStepper.show();
       delay(500);
       idlePage.show();
@@ -441,6 +504,7 @@ void evalStates() {
         heatup_bStartExt.hide();
         heatup_tReady.hide();
         currentState = heatup;
+        digitalWrite(EXTRUDER_MOTOR, LOW);
         dbSerialPrintln("currentState = heatup");
       }
       break;
@@ -454,6 +518,7 @@ void evalStates() {
         heatup_bStartExt.hide();
         heatup_tReady.hide();
         currentState = heatup;
+        digitalWrite(EXTRUDER_MOTOR, LOW);
         dbSerialPrintln("currentState = heatup");
       }
       break;
@@ -463,10 +528,30 @@ void evalStates() {
       analogWrite(HEATER_1, heaterOutput);
       analogWrite(HEATER_2, heaterOutput);
       analogWrite(HEATER_3, heaterOutput);
+      if(stepperGuide.isRunning()) {
+        stepperGuide.runSpeedToPosition();
+        stepperSpool.runSpeedToPosition();
+      } else {
+        currentLayer++;
+        windupSpeed = EXTRUSION_FEED / ((SPOOL_INNER_DIAMETER + currentLayer * 2 * FILAMENT_DIAMETER) * M_PI) * 60; //[1/min]
+        stepsPerSecond = windupSpeed / 60 * STEPS_PER_REVOLUTION; //[1/s]
+        if(stepperGuide.currentPosition() == 0) {
+          stepperGuide.moveTo(- STEPS_PER_REVOLUTION * turnsPerLayer + FILAMENT_DIAMETER / 2);
+          stepperGuide.setSpeed(- stepsPerSecond);
+        } else {
+          stepperGuide.moveTo(0);
+          stepperGuide.setSpeed(stepsPerSecond);
+        }
+        stepperGuide.runSpeedToPosition();
+        stepperSpool.moveTo(stepperSpool.currentPosition() + STEPS_PER_REVOLUTION * turnsPerLayer);
+        stepperSpool.setSpeed(stepsPerSecond);
+        stepperSpool.runSpeedToPosition();
+      }
       if(actualTemp > nominalTemp + ALLOWED_TEMP_DEVIATION || actualTemp < nominalTemp - ALLOWED_TEMP_DEVIATION) {
         heatup_bStartExt.hide();
         heatup_tReady.hide();
         currentState = heatup;
+        digitalWrite(EXTRUDER_MOTOR, LOW);
         dbSerialPrintln("currentState = heatup");
       }
       break;
