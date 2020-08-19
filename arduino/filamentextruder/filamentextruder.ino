@@ -1,5 +1,7 @@
 //Include libraries
 #include "Nextion.h"
+#include <Adafruit_MAX31865.h>
+#include <PID_v1.h>
 
 //Define defaults
 #define NOMINAL_TEMP 165
@@ -10,6 +12,26 @@
 
 //Define allowed temperature deviation
 #define ALLOWED_TEMP_DEVIATION 2
+
+//Define temperature sensor pins 
+#define MAX31865_CS 10
+#define MAX31865_DI 11
+#define MAX31865_DO 12
+#define MAX31865_CLK 13
+
+//Define heater pins
+#define HEATER_1 3
+#define HEATER_2 5
+#define HEATER_3 6
+
+//Define PT100 parameters
+#define RREF 430.0
+#define RNOMINAL 100.0
+
+//Define PID parameters
+#define K_P 150
+#define K_I 1.8
+#define K_D 1080
 
 //Declare Extruder FSM states
 enum states {initialize, refStep, idle, settings, heatup, ready, extrude, windup};
@@ -22,6 +44,13 @@ float windUpSpeed = WINDUP_SPEED;
 int spoolWidth = SPOOL_WIDTH;
 int spoolInnerDiameter = SPOOL_INNER_DIAMETER;
 int spoolOuterDiameter = SPOOL_OUTER_DIAMETER;
+
+//Declare temperature sensor 
+Adafruit_MAX31865 pt100 = Adafruit_MAX31865(MAX31865_CS, MAX31865_DI, MAX31865_DO, MAX31865_CLK);
+
+//Declare PID
+int heaterOutput;
+PID pid(&actualTemp, &heaterOutput, &nominalTemp, K_P, K_I, K_D, DIRECT);
 
 //Declare Nextion objects
 //Page 0: init
@@ -348,17 +377,31 @@ void settings_bOuterPlus5_callback() {
   settings_tOuterDia.setText(String(spoolOuterDiameter) + "mm");
 }
 
+//Define init functions
+void initSensors() {
+  pt100.begin(MAX31865_2WIRE);
+}
+void initPID() {
+  pinMode(HEATER_1, OUTPUT);
+  pinMode(HEATER_2, OUTPUT);
+  pinMode(HEATER_3, OUTPUT);
+  pid.SetMode(AUTOMATIC);
+}
+void initMotors() {
+
+}
+
 //Define state machine evaluations
 void evalStates() {
   switch(currentState) {
     case initialize:
       dbSerialPrintln("currentState = init");
       initPage.show();
-      delay(500);
+      initSensors();
       init_pInitSensors.show();
-      delay(600);
+      initPID();
       init_pInitPID.show();
-      delay(400);
+      initMotors();
       init_pInitMotors.show();
       currentState = refStep;
       dbSerialPrintln("currentState = refStep");
@@ -376,8 +419,11 @@ void evalStates() {
     case settings:
       break;
     case heatup:
-      delay(5000);
-      actualTemp = nominalTemp;
+      actualTemp = pt100.temperature(RNOMINAL, RREF);
+      pid.Compute();
+      analogWrite(HEATER_1, heaterOutput);
+      analogWrite(HEATER_2, heaterOutput);
+      analogWrite(HEATER_3, heaterOutput);
       if(actualTemp >= nominalTemp - ALLOWED_TEMP_DEVIATION && actualTemp <= nominalTemp + ALLOWED_TEMP_DEVIATION) {
         heatup_bStartExt.show();
         heatup_tReady.show();
@@ -386,6 +432,11 @@ void evalStates() {
       }
       break;
     case ready:
+      actualTemp = pt100.temperature(RNOMINAL, RREF);
+      pid.Compute();
+      analogWrite(HEATER_1, heaterOutput);
+      analogWrite(HEATER_2, heaterOutput);
+      analogWrite(HEATER_3, heaterOutput);
       if(actualTemp > nominalTemp + ALLOWED_TEMP_DEVIATION || actualTemp < nominalTemp - ALLOWED_TEMP_DEVIATION) {
         heatup_bStartExt.hide();
         heatup_tReady.hide();
@@ -394,6 +445,11 @@ void evalStates() {
       }
       break;
     case extrude:
+      actualTemp = pt100.temperature(RNOMINAL, RREF);
+      pid.Compute();
+      analogWrite(HEATER_1, heaterOutput);
+      analogWrite(HEATER_2, heaterOutput);
+      analogWrite(HEATER_3, heaterOutput);
       if(actualTemp > nominalTemp + ALLOWED_TEMP_DEVIATION || actualTemp < nominalTemp - ALLOWED_TEMP_DEVIATION) {
         heatup_bStartExt.hide();
         heatup_tReady.hide();
@@ -402,6 +458,11 @@ void evalStates() {
       }
       break;
     case windup:
+      actualTemp = pt100.temperature(RNOMINAL, RREF);
+      pid.Compute();
+      analogWrite(HEATER_1, heaterOutput);
+      analogWrite(HEATER_2, heaterOutput);
+      analogWrite(HEATER_3, heaterOutput);
       if(actualTemp > nominalTemp + ALLOWED_TEMP_DEVIATION || actualTemp < nominalTemp - ALLOWED_TEMP_DEVIATION) {
         heatup_bStartExt.hide();
         heatup_tReady.hide();
