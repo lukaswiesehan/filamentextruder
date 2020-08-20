@@ -7,18 +7,19 @@
 
 //Define defaults
 #define NOMINAL_TEMP 165 //[°C]
-#define SPOOL_WIDTH 73 //[mm]
+#define SPOOL_WIDTH 69 //[mm]
 #define SPOOL_PICKUP_DIAMETER 50 //[mm]
 #define SPOOL_INNER_DIAMETER 100 //[mm]
 #define SPOOL_OUTER_DIAMETER 200 //[mm]
 
 //Define other process parameters
-#define ALLOWED_TEMP_DEVIATION 2 //[°C]
+#define UPDATE_INTERVAL 1000 //[ms]
+#define ALLOWED_TEMP_DEVIATION 5 //[°C]
 #define EXTRUSION_FEED 15.85935 //[mm/s]
 #define FILAMENT_DIAMETER 1.75 //[mm]
 #define ENDSTOP_OFFSET 4 //[mm]
 #define M12_PITCH 1.75 //[mm]
-#define STEPS_PER_REVOLUTION 6400L //[steps]
+#define STEPS_PER_REVOLUTION 200L //[steps]
 
 //Define temperature sensor pins 
 #define MAX31865_CS 45 //Any digital pin
@@ -57,6 +58,7 @@ enum states {initialize, refStep, idle, settings, heatup, ready, extrude, windup
 states currentState = initialize;
 
 //Declare extruder process variables
+long updateTime = 0L;
 double nominalTemp = NOMINAL_TEMP; //[°C]
 double actualTemp = 0.0; //[°C]
 int spoolWidth = SPOOL_WIDTH; 
@@ -215,7 +217,7 @@ void idle_bHeatup_callback() {
   currentState = heatup;
   heatup_nNominalTemp.setValue((int)nominalTemp);
   heatup_nActualTemp.setValue((int)actualTemp);
-  dbSerialPrintln("currentState = heatup");
+  //dbSerialPrintln("currentState = heatup");
 }
 void idle_bSettings_callback() {
   settingsPage.show();
@@ -225,7 +227,7 @@ void idle_bSettings_callback() {
   settings_tWidth.setText(String(spoolWidth) + "mm");
   settings_tInnerDia.setText(String(spoolInnerDiameter) + "mm");
   settings_tOuterDia.setText(String(spoolOuterDiameter) + "mm");
-  dbSerialPrintln("currentState = settings");
+  //dbSerialPrintln("currentState = settings");
 }
 //Page 2: heatup
 void heatup_bCooldown_callback() {
@@ -235,7 +237,7 @@ void heatup_bCooldown_callback() {
   analogWrite(HEATER_1, heaterOutput);
   analogWrite(HEATER_2, heaterOutput);
   analogWrite(HEATER_3, heaterOutput);
-  dbSerialPrintln("currentState = idle");
+  //dbSerialPrintln("currentState = idle");
 }
 void heatup_bStartExt_callback() {
   extrudePage.show();
@@ -243,7 +245,7 @@ void heatup_bStartExt_callback() {
   extrude_nNominalTemp.setValue((int)nominalTemp);
   extrude_nActualTemp.setValue((int)actualTemp);
   digitalWrite(EXTRUDER_MOTOR, HIGH);
-  dbSerialPrintln("currentState = extrude");
+  //dbSerialPrintln("currentState = extrude");
 }
 void heatup_bTempMinus5_callback() {
   nominalTemp -= 5;
@@ -270,7 +272,7 @@ void extrude_bCooldown_callback() {
   analogWrite(HEATER_1, heaterOutput);
   analogWrite(HEATER_2, heaterOutput);
   analogWrite(HEATER_3, heaterOutput);
-  dbSerialPrintln("currentState = idle");
+  //dbSerialPrintln("currentState = idle");
 }
 void extrude_bPauseExt_callback() {
   heatupPage.show();
@@ -278,7 +280,7 @@ void extrude_bPauseExt_callback() {
   digitalWrite(EXTRUDER_MOTOR, LOW);
   heatup_nNominalTemp.setValue((int)nominalTemp);
   heatup_nActualTemp.setValue((int)actualTemp);
-  dbSerialPrintln("currentState = heatup");
+  //dbSerialPrintln("currentState = heatup");
 }
 void extrude_bStartWind_callback() {
   windupPage.show();
@@ -286,7 +288,7 @@ void extrude_bStartWind_callback() {
   windup_tSpeed.setText(String(windupSpeed).substring(0, 4) + " RPM");
   windup_nNominalTemp.setValue((int)nominalTemp);
   windup_nActualTemp.setValue((int)actualTemp);
-  dbSerialPrintln("currentState = windup");
+  //dbSerialPrintln("currentState = windup");
 }
 void extrude_bTempMinus1_callback() {
   nominalTemp -= 1;
@@ -305,14 +307,14 @@ void windup_bCooldown_callback() {
   analogWrite(HEATER_1, heaterOutput);
   analogWrite(HEATER_2, heaterOutput);
   analogWrite(HEATER_3, heaterOutput);
-  dbSerialPrintln("currentState = idle");
+  //dbSerialPrintln("currentState = idle");
 }
 void windup_bPauseWind_callback() {
   extrudePage.show();
   currentState = extrude;
   extrude_nNominalTemp.setValue((int)nominalTemp);
   extrude_nActualTemp.setValue((int)actualTemp);
-  dbSerialPrintln("currentState = extrude");
+  //dbSerialPrintln("currentState = extrude");
 }
 void windup_bTempMinus1_callback() {
   nominalTemp -= 1;
@@ -347,7 +349,7 @@ void settings_bSave_callback() {
   initMotors();
   idlePage.show();
   currentState = idle;
-  dbSerialPrintln("currentState = idle");
+  //dbSerialPrintln("currentState = idle");
 }
 void settings_bTempMinus5_callback() {
   nominalTemp -= 5;
@@ -442,6 +444,7 @@ void initPID() {
   pid.SetMode(AUTOMATIC);
 }
 void initMotors() {
+  pinMode(EXTRUDER_MOTOR, OUTPUT);
   pinMode(STEPPER_SPOOL_STP, OUTPUT);
   pinMode(STEPPER_SPOOL_DIR, OUTPUT);
   pinMode(STEPPER_GUIDE_STP, OUTPUT); 
@@ -458,7 +461,7 @@ void initMotors() {
 void evalStates() {
   switch(currentState) {
     case initialize:
-      dbSerialPrintln("currentState = init");
+      //dbSerialPrintln("currentState = init");
       initPage.show();
       initSensors();
       init_pInitSensors.show();
@@ -467,7 +470,7 @@ void evalStates() {
       initMotors();
       init_pInitMotors.show();
       currentState = refStep;
-      dbSerialPrintln("currentState = refStep");
+      //dbSerialPrintln("currentState = refStep");
       break;
     case refStep:
       stepperGuide.setSpeed(10000); //[steps/s]
@@ -476,7 +479,7 @@ void evalStates() {
       }
       stepperGuide.setCurrentPosition(ENDSTOP_OFFSET / M12_PITCH * STEPS_PER_REVOLUTION); //[steps]
       stepperGuide.moveTo(0); //[steps]
-      stepperGuide.setSpeed(-1000); //[steps/s]
+      stepperGuide.setSpeed(-5000); //[steps/s]
       while(stepperGuide.currentPosition() != stepperGuide.targetPosition()) {
         stepperGuide.runSpeed();
       }
@@ -484,7 +487,7 @@ void evalStates() {
       delay(500);
       idlePage.show();
       currentState = idle;
-      dbSerialPrintln("currentState = idle");
+      //dbSerialPrintln("currentState = idle");
       break;
     case idle:
       break;
@@ -492,7 +495,10 @@ void evalStates() {
       break;
     case heatup:
       actualTemp = pt100.temperature(RNOMINAL, RREF);
-      heatup_nActualTemp.setValue((int)actualTemp);
+      if(millis() >= updateTime + UPDATE_INTERVAL) {
+        heatup_nActualTemp.setValue((int)actualTemp);
+        updateTime = millis();
+      }
       pid.Compute();
       analogWrite(HEATER_1, heaterOutput);
       analogWrite(HEATER_2, heaterOutput);
@@ -501,12 +507,15 @@ void evalStates() {
         heatup_bStartExt.show();
         heatup_tReady.show();
         currentState = ready;
-        dbSerialPrintln("currentState = ready");
+        //dbSerialPrintln("currentState = ready");
       }
       break;
     case ready:
       actualTemp = pt100.temperature(RNOMINAL, RREF);
-      heatup_nActualTemp.setValue((int)actualTemp);
+      if(millis() >= updateTime + UPDATE_INTERVAL) {
+        heatup_nActualTemp.setValue((int)actualTemp);
+        updateTime = millis();
+      }
       pid.Compute();
       analogWrite(HEATER_1, heaterOutput);
       analogWrite(HEATER_2, heaterOutput);
@@ -515,15 +524,17 @@ void evalStates() {
         heatup_bStartExt.hide();
         heatup_tReady.hide();
         currentState = heatup;
-        digitalWrite(EXTRUDER_MOTOR, LOW);
         heatup_nNominalTemp.setValue((int)nominalTemp);
         heatup_nActualTemp.setValue((int)actualTemp);
-        dbSerialPrintln("currentState = heatup");
+        //dbSerialPrintln("currentState = heatup");
       }
       break;
     case extrude:
       actualTemp = pt100.temperature(RNOMINAL, RREF);
-      extrude_nActualTemp.setValue((int)actualTemp);
+      if(millis() >= updateTime + UPDATE_INTERVAL) {
+        extrude_nActualTemp.setValue((int)actualTemp);
+        updateTime = millis();
+      }
       pid.Compute();
       analogWrite(HEATER_1, heaterOutput);
       analogWrite(HEATER_2, heaterOutput);
@@ -535,12 +546,15 @@ void evalStates() {
         digitalWrite(EXTRUDER_MOTOR, LOW);
         heatup_nNominalTemp.setValue((int)nominalTemp);
         heatup_nActualTemp.setValue((int)actualTemp);
-        dbSerialPrintln("currentState = heatup");
+        //dbSerialPrintln("currentState = heatup");
       }
       break;
     case windup:
       actualTemp = pt100.temperature(RNOMINAL, RREF);
-      windup_nActualTemp.setValue((int)actualTemp);
+      if(millis() >= updateTime + UPDATE_INTERVAL) {
+        windup_nActualTemp.setValue((int)actualTemp);
+        updateTime = millis();
+      }
       pid.Compute();
       analogWrite(HEATER_1, heaterOutput);
       analogWrite(HEATER_2, heaterOutput);
@@ -571,7 +585,7 @@ void evalStates() {
         digitalWrite(EXTRUDER_MOTOR, LOW);
         heatup_nNominalTemp.setValue((int)nominalTemp);
         heatup_nActualTemp.setValue((int)actualTemp);
-        dbSerialPrintln("currentState = heatup");
+        //dbSerialPrintln("currentState = heatup");
       }
       break;
     default:
