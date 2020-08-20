@@ -21,27 +21,27 @@
 #define STEPS_PER_REVOLUTION 6400L //[steps]
 
 //Define temperature sensor pins 
-#define MAX31865_CS 10
-#define MAX31865_DI 11
-#define MAX31865_DO 12
-#define MAX31865_CLK 13
+#define MAX31865_CS 45 //Any digital pin
+#define MAX31865_DI 47 //Any digital pin
+#define MAX31865_DO 49 //Any digital pin
+#define MAX31865_CLK 51 //Any digital pin 
 
 //Define heater pins
-#define HEATER_1 3
-#define HEATER_2 5
-#define HEATER_3 6
+#define HEATER_1 2 //PWM pin
+#define HEATER_2 3 //PWM pin
+#define HEATER_3 4 //PWM pin
 
 //Define extruder motor pin 
-#define EXTRUDER_MOTOR 40
+#define EXTRUDER_MOTOR 53 //Any digital pin 
 
 //Define stepper motor pins
-#define STEPPER_SPOOL_STP 4
-#define STEPPER_SPOOL_DIR 5
-#define STEPPER_GUIDE_STP 6
-#define STEPPER_GUIDE_DIR 7
+#define STEPPER_SPOOL_STP 10 //Any digital pin 
+#define STEPPER_SPOOL_DIR 9 //Any digital pin 
+#define STEPPER_GUIDE_STP 12 //Any digital pin 
+#define STEPPER_GUIDE_DIR 11 //Any digital pin 
 
 //Define endstop pin 
-#define ENDSTOP 2
+#define ENDSTOP 13 //Any digital pin 
 
 //Define PT100 parameters
 #define RREF 430.0
@@ -214,6 +214,7 @@ void idle_bHeatup_callback() {
   heatupPage.show();
   currentState = heatup;
   heatup_nNominalTemp.setValue((int)nominalTemp);
+  heatup_nActualTemp.setValue((int)actualTemp);
   dbSerialPrintln("currentState = heatup");
 }
 void idle_bSettings_callback() {
@@ -240,6 +241,7 @@ void heatup_bStartExt_callback() {
   extrudePage.show();
   currentState = extrude;
   extrude_nNominalTemp.setValue((int)nominalTemp);
+  extrude_nActualTemp.setValue((int)actualTemp);
   digitalWrite(EXTRUDER_MOTOR, HIGH);
   dbSerialPrintln("currentState = extrude");
 }
@@ -275,6 +277,7 @@ void extrude_bPauseExt_callback() {
   currentState = heatup;
   digitalWrite(EXTRUDER_MOTOR, LOW);
   heatup_nNominalTemp.setValue((int)nominalTemp);
+  heatup_nActualTemp.setValue((int)actualTemp);
   dbSerialPrintln("currentState = heatup");
 }
 void extrude_bStartWind_callback() {
@@ -282,6 +285,7 @@ void extrude_bStartWind_callback() {
   currentState = windup;
   windup_tSpeed.setText(String(windupSpeed).substring(0, 4) + " RPM");
   windup_nNominalTemp.setValue((int)nominalTemp);
+  windup_nActualTemp.setValue((int)actualTemp);
   dbSerialPrintln("currentState = windup");
 }
 void extrude_bTempMinus1_callback() {
@@ -307,6 +311,7 @@ void windup_bPauseWind_callback() {
   extrudePage.show();
   currentState = extrude;
   extrude_nNominalTemp.setValue((int)nominalTemp);
+  extrude_nActualTemp.setValue((int)actualTemp);
   dbSerialPrintln("currentState = extrude");
 }
 void windup_bTempMinus1_callback() {
@@ -428,6 +433,7 @@ void settings_bOuterPlus5_callback() {
 //Define init functions
 void initSensors() {
   pt100.begin(MAX31865_2WIRE);
+  pinMode(ENDSTOP, INPUT);
 }
 void initPID() {
   pinMode(HEATER_1, OUTPUT);
@@ -436,7 +442,10 @@ void initPID() {
   pid.SetMode(AUTOMATIC);
 }
 void initMotors() {
-  pinMode(ENDSTOP, OUTPUT);
+  pinMode(STEPPER_SPOOL_STP, OUTPUT);
+  pinMode(STEPPER_SPOOL_DIR, OUTPUT);
+  pinMode(STEPPER_GUIDE_STP, OUTPUT); 
+  pinMode(STEPPER_GUIDE_DIR, OUTPUT);
   stepperSpool.setMaxSpeed(10000); //[steps/s]
   stepperGuide.setMaxSpeed(10000); //[steps/s]
   turnsPerLayer = spoolWidth / FILAMENT_DIAMETER;
@@ -483,6 +492,7 @@ void evalStates() {
       break;
     case heatup:
       actualTemp = pt100.temperature(RNOMINAL, RREF);
+      heatup_nActualTemp.setValue((int)actualTemp);
       pid.Compute();
       analogWrite(HEATER_1, heaterOutput);
       analogWrite(HEATER_2, heaterOutput);
@@ -496,6 +506,7 @@ void evalStates() {
       break;
     case ready:
       actualTemp = pt100.temperature(RNOMINAL, RREF);
+      heatup_nActualTemp.setValue((int)actualTemp);
       pid.Compute();
       analogWrite(HEATER_1, heaterOutput);
       analogWrite(HEATER_2, heaterOutput);
@@ -505,11 +516,14 @@ void evalStates() {
         heatup_tReady.hide();
         currentState = heatup;
         digitalWrite(EXTRUDER_MOTOR, LOW);
+        heatup_nNominalTemp.setValue((int)nominalTemp);
+        heatup_nActualTemp.setValue((int)actualTemp);
         dbSerialPrintln("currentState = heatup");
       }
       break;
     case extrude:
       actualTemp = pt100.temperature(RNOMINAL, RREF);
+      extrude_nActualTemp.setValue((int)actualTemp);
       pid.Compute();
       analogWrite(HEATER_1, heaterOutput);
       analogWrite(HEATER_2, heaterOutput);
@@ -519,11 +533,14 @@ void evalStates() {
         heatup_tReady.hide();
         currentState = heatup;
         digitalWrite(EXTRUDER_MOTOR, LOW);
+        heatup_nNominalTemp.setValue((int)nominalTemp);
+        heatup_nActualTemp.setValue((int)actualTemp);
         dbSerialPrintln("currentState = heatup");
       }
       break;
     case windup:
       actualTemp = pt100.temperature(RNOMINAL, RREF);
+      windup_nActualTemp.setValue((int)actualTemp);
       pid.Compute();
       analogWrite(HEATER_1, heaterOutput);
       analogWrite(HEATER_2, heaterOutput);
@@ -552,6 +569,8 @@ void evalStates() {
         heatup_tReady.hide();
         currentState = heatup;
         digitalWrite(EXTRUDER_MOTOR, LOW);
+        heatup_nNominalTemp.setValue((int)nominalTemp);
+        heatup_nActualTemp.setValue((int)actualTemp);
         dbSerialPrintln("currentState = heatup");
       }
       break;
