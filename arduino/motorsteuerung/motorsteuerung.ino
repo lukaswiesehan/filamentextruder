@@ -8,7 +8,7 @@
 #define SPOOL_SIDE_THICKNESS 3.5 //[mm]
 
 //Define other process parameters
-#define EXTRUSION_FEED 9.0 //[mm/s]
+#define EXTRUSION_FEED 7.0 //[mm/s]
 #define FILAMENT_DIAMETER 1.75 //[mm]
 #define M12_PITCH 1.75 //[mm]
 #define STEPS_PER_REVOLUTION 6400L //[steps]
@@ -24,7 +24,7 @@
 //Define endstop pin 
 #define ENDSTOP 13 //Any digital pin
 
-//Define signal pins
+//Define signal pins 
 #define INIT_SIGNAL 5 //Any digital pin 
 #define REF_SIGNAL 6 //Any digital pin 
 #define WINDUP_SIGNAL 7 //Any digital pin 
