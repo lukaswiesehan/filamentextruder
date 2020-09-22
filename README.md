@@ -63,8 +63,9 @@ werden, weshalb sie in der Kostenaufstellung nicht berücksichtigt werden. Zudem
 | 1x | [Nextion Display NX4024K032](https://www.amazon.de/MakerHawk-Nextion-NX4024K032-erweiterte-Versionen/dp/B072FN3SFH/) | Anzeige und Touch-Interface zur Steuerung des Systems | 38,44€ |
 | 1x | [Arduino Mega](https://www.az-delivery.de/products/mega-2560-r3-board-mit-atmega2560-100-arduino-kompatibel-ohne-usb-kabel?_pos=15&_sid=7e3e6e2d1&_ss=r) | Steuerung des Extruder-Systems und des HMI | 13,79€ |
 | 1x | [Arduino Nano](https://www.az-delivery.de/products/nano-v3-mit-ch340-arduino-kompatibel) | Steuerung des Wicklungsmechanismus | 6,49€ |
+| 1x | [Relais-Modul KY-019](https://www.az-delivery.de/products/relais-modul) | Schalten des Extrudermotors | 4,99€ |
 
-Die Hardware-Kosten summieren sich damit auf **641,52€** zzgl. diverser Versandkosten sowie der Gehäuse- bzw. Druckteile.
+Die Hardware-Kosten summieren sich damit auf **646,51€** zzgl. diverser Versandkosten sowie der Gehäuse- bzw. Druckteile.
 
 ### Verdrahtung des Systems
 
