@@ -11,6 +11,18 @@ Betreut von Prof. Dr. Dietmar Pähler.*
 - [Hardware](#hardware)
   - [Bestellliste](#bestellliste)
   - [Verdrahtung des Systems](#verdrahtung-des-systems)
+    - [Arduino Mega](#arduino-mega)
+    - [Arduino Nano](#arduino-nano)
+    - [Mosfet-Module](#mosfet-module)
+    - [Heizpatronen](#heizpatronen)
+    - [PT100 Signalverstärker](#pt100-signalverstärker)
+    - [PT100 Temperatursensor](#pt100-temperatursensor)
+    - [Relais-Modul](#relais-modul)
+    - [Extruder Motor](#extruder-motor)
+    - [Filament-Lüfter](#filament-lüfter)
+    - [Schrittmotortreiber](#schrittmotortreiber)
+    - [Schrittmotoren](#schrittmotoren)
+    - [Optischer Endschalter](#optischer-endschalter)
 
 ## Einführung
 
@@ -64,10 +76,100 @@ werden, weshalb sie in der Kostenaufstellung nicht berücksichtigt werden. Zudem
 | 1x | [Arduino Mega](https://www.az-delivery.de/products/mega-2560-r3-board-mit-atmega2560-100-arduino-kompatibel-ohne-usb-kabel?_pos=15&_sid=7e3e6e2d1&_ss=r) | Steuerung des Extruder-Systems und des HMI | 13,79€ |
 | 1x | [Arduino Nano](https://www.az-delivery.de/products/nano-v3-mit-ch340-arduino-kompatibel) | Steuerung des Wicklungsmechanismus | 6,49€ |
 | 1x | [Relais-Modul KY-019](https://www.az-delivery.de/products/relais-modul) | Schalten des Extrudermotors | 4,99€ |
+| 1x | [Optischer Endschalter](https://www.amazon.de/Homyl-Optischer-Begrenzungsschalter-Endanschlag-Werkzeuge-Rot/dp/B07MHFTVNF/) | Referenzierung des Führungsmotors | 2,51€ |
 
-Die Hardware-Kosten summieren sich damit auf **646,51€** zzgl. diverser Versandkosten sowie der Gehäuse- bzw. Druckteile.
+Die Hardware-Kosten summieren sich damit auf **649,02€** zzgl. diverser Versandkosten sowie der Gehäuse- bzw. Druckteile.
 
 ### Verdrahtung des Systems
 
 ###### Verdrahtung <!-- omit in toc -->
 ![Verdrahtung](/wiring.png "Verdrahtung")
+
+Im oben abgebildeten Schema wurde folgende Farbkonvention eingehalten:
+- Schwarz: GND
+- Rot: 5-12V VCC
+- Orange: 24V VCC
+- Blau, Grün, Gelb, Lila: Daten/Signale
+
+*Hinweis: Das Nextion Display wurde im Schema durch ein ähnliches Display ersetzt,
+welches sich sowohl im Maßstab, als auch in der Pin-Belegung unterscheidet.*
+
+*Hinweis: Es ist darauf zu achten, dass alle Elemente des Systems auf das selbe `GND`-Niveau gelegt sind.*
+
+#### Arduino Mega
+
+Der Arduino Mega dient als primärer Prozessor des Systems, auf dem die Temperaturregelung
+und die Displaysteuerung implementiert sind. Er wird an `GND` und `12 V` Versorgungsspannung angeschlossen.
+
+#### Arduino Nano
+
+Der Arduino Nano wird für die Steuerung des Wicklungsmechanismus benötigt, da die Ansteuerung
+der Schrittmotoren eine Signalfrequenz benötigt, die auf dem Mega wegen der darauf laufenden 
+Temperaturregelung nicht gewährleistet werden kann. Der Nano wird zur Versorgung ebenfalls
+an `GND` und `12 V` angeschlossen. Zudem wird der Hardware-Serial des Nanos mit den Pins `TX`
+und `RX` an `RX1` und `TX1` des Mega, also dessen Hardware-Serial 1 verbunden, sodass eine
+Kommunikation zwischen den beiden Arduinos implementiert werden kann.
+
+#### Mosfet-Module
+
+Die drei Mosfet-Module werden jeweils `GND` und `24 V` Versorgungsspannung angeschlossen.
+Für die Ansteuerung werden `GND` und `VCC` mit dem `5 V` Ausgang und `SIG` mit je einem 
+PWM-Ausgang (hier Pins `1`, `2` und `3`) des Arduino Mega verbunden. 
+
+#### Heizpatronen
+
+Die Heizpatronen werden jeweils an die beiden Ausgangs-Terminals der Mosfet-Module angeschlossen. Die Polarität spielt hierbei keine Rolle.
+
+#### PT100 Signalverstärker
+
+Das Adafruit-Modul MAX31865 zum Auslesen des PT100-Sensors wird an `GND` und `5 V` Versogungsspannung angeschlossen. Zur Übertragung der Temperatur an den Arduino Mega werden
+die Pins `CS`, `DI`, `DO` und `CLK` an vier Digital-Pins (hier Pins `45`, `47`, `49` und `51`) des Mega angeschlossen.
+
+#### PT100 Temperatursensor
+
+Der PT100 Sensor wird an das Sensorterminal des Adafruit MAX31865 angeschlossen. Da es sich
+um einen PT100 mit zwei Kabeln handelt, werden die mittleren beiden Anschlüsse des Moduls
+verwendet.
+
+Zur Verwendung des Moduls und des PT100 in Kombination mit einer entsprechenden
+Arduino-Library findet sich auf der [Adafruit-Website](https://learn.adafruit.com/adafruit-max31865-rtd-pt100-amplifier/arduino-code) ein umfangreiches Tutorial.
+
+#### Relais-Modul
+
+Das Relais-Modul KY-019 soll zur Steuerung des Extruder-Motors verwendet werden, weshalb an 
+den `COM`-Port `12 V` Versorgungsspannung angelegt wird. An der Signalseite wird das Modul
+mit `GND` und `5 V` versorgt. Der `SIG`-Pin wird an einen Digitalpin (hier Pin `53`) des Arduino Mega angeschlossen. 
+
+#### Extruder Motor
+
+Der Extruder-Motor wird am Negativ-Pol mit `GND` verbunden, während der Positiv-Pol auf den
+`NO`-, also "Normally Open"-Ausgang des Relais-Moduls gelegt wird.
+
+#### Filament-Lüfter
+
+Da der Lüfter zur Kühlung des Filaments nur benötigt wird, sofern extrudiert wird, wird er
+analog zum Extruder-Motor mit `GND` versorgt und mit dem Positiv-Pol an das `NO`-Terminal
+des Relais-Moduls angeschlossen.
+
+#### Schrittmotortreiber
+
+Die Schrittmotortreiber werden jeweils mit `GND` und `24 V` versorgt. Die `GND`-Leitung kann zudem jeweils direkt mit auf `PUL-` und `DIR-` der Signalterminals gelegt werden. `PUL+` und
+`DIR+` werden an jeweils einen Digitalpin des Arduino Nano angeschlossen. Der Wicklungsmotor
+ist hier an `10` und `9`, der Führungsmotor an `12` und `11` angeschlossen.
+
+*Wichtig: die Schrittmotoren müssen mit den 6 Schaltern auf folgende Konfiguration eingestellt werden.*
+
+| S1 | S2 | S3 | S4 | S5 | S6 |
+|:-:|:-:|:-:|:-:|:-:|:-:|
+| 0 | 0 | 0 | 1 | 1 | 1 |
+
+#### Schrittmotoren
+
+Die Schrittmotoren werden jeweils an `A-`, `A+`, `B-` und `B+` der Motortreiber angeschlossen. Die genaue Belegung kann vom Schrittmotor abhängig sein, daher wird an 
+dieser Stelle auf [dieses Tutorial](https://www.makerguides.com/tb6600-stepper-motor-driver-arduino-tutorial/) verwiesen, in dem beschrieben wird, wie die
+die korrekte Belegung der Schrittmotoren bestimmt werden kann.
+
+#### Optischer Endschalter
+
+Der optische Endschalter wird an `GND` und `5 V` Versorgungsspannung angeschlossen und mit
+dem `S`- bzw. Signal-Pin auf einen Digitalpin (hier Pin `13`) des Arduino Nano gelegt.
