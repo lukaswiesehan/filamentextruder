@@ -63,7 +63,7 @@ werden, weshalb sie in der Kostenaufstellung nicht berücksichtigt werden. Zudem
 | Anzahl | Bezeichnung | Beschreibung | Preis |
 |:---:| --- | --- |:---:|
 | 1x | [Felfil Evo Basic Kit](https://felfil.com/shop/felfil-evo-basic-kit/?v=5ea34fa833a1) | Basiskomponenten des Extruders als Bausatz | 299,00€ |
-| 1x | [Kaltgeräte-Einbaubuchse](https://www.conrad.de/de/p/kaltgeraete-steckverbinder-stecker-einbau-vertikal-gesamtpolzahl-2-pe-10-a-schwarz-1-st-501638.html) | Spannungsversorgung des Systems | 4,77€ |
+| 1x | [Kaltgerätebuchse](https://www.amazon.de/Hifi-Lab-Einbau-Stecker-Einbau-Buchse-Kaltger%C3%A4te-Buchse/dp/B01H5MK3OI) | Spannungsversorgung des Systems | 6,39€ |
 | 1x | [Kaltegeräte-Anschlusskabel](https://www.conrad.de/de/p/hawa-1008230-kaltgeraete-anschlusskabel-schwarz-2-00-m-621535.html) | Spannungsversorgung des Systems | 4,86€ |
 | 1x | [Netzteil 24V 320W](https://www.conrad.de/de/p/mean-well-rsp-320-24-ac-dc-netzteilbaustein-geschlossen-13-4-a-321-6-w-24-v-dc-1293056.html) | Primäre Spannungsquelle des Systems | 62,38€ |
 | 1x | [Spannungswandler XL4016](https://www.az-delivery.de/products/xl4016-step-down-buck-converter-dc-dc?_pos=5&_sid=a325961b4&_ss=r) | Spannungsversorgung der 12V-Komponenten (Extrudermotor & Lüfter) | 8,49€ |
