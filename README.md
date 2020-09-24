@@ -24,6 +24,7 @@ Betreut von Prof. Dr. Dietmar Pähler.*
     - [Schrittmotoren](#schrittmotoren)
     - [Optischer Endschalter](#optischer-endschalter)
 - [Software](#software)
+- [Bedienung des Systems](#bedienung-des-systems)
 
 ## Einführung
 
@@ -179,5 +180,9 @@ dem `S`- bzw. Signal-Pin auf einen Digitalpin (hier Pin `13`) des Arduino Nano g
 
 Die Software besteht aus zwei Komponenten, die sich im Ordner [`/arduino`](/arduino) befinden.
 Die genauen Funktionsweisen der Codes können den zugehörigen README-Dateien entnommen werden. 
-Wie im Bereich *Hardware* bereits angedeutet, wird das Arduino-Projekt [`filamentextruder`](/arduino/filamentextruder) auf den Arduino Mega und das Projekt ['`motorsteuerung`](/arduino/motorsteuerung) auf
+Wie im Bereich *Hardware* bereits angedeutet, wird das Arduino-Projekt [`filamentextruder`](/arduino/filamentextruder) auf den Arduino Mega und das Projekt [`motorsteuerung`](/arduino/motorsteuerung) auf
 den Arduino Nano hochgeladen.
+
+## Bedienung des Systems
+
+tbd.
