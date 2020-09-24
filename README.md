@@ -69,4 +69,5 @@ Die Hardware-Kosten summieren sich damit auf **646,51€** zzgl. diverser Versan
 
 ### Verdrahtung des Systems
 
+###### Verdrahtung <!-- omit in toc -->
 ![Verdrahtung](/wiring.png "Verdrahtung")
