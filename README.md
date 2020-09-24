@@ -23,6 +23,7 @@ Betreut von Prof. Dr. Dietmar Pähler.*
     - [Schrittmotortreiber](#schrittmotortreiber)
     - [Schrittmotoren](#schrittmotoren)
     - [Optischer Endschalter](#optischer-endschalter)
+- [Software](#software)
 
 ## Einführung
 
@@ -157,7 +158,7 @@ Die Schrittmotortreiber werden jeweils mit `GND` und `24 V` versorgt. Die `GND`-
 `DIR+` werden an jeweils einen Digitalpin des Arduino Nano angeschlossen. Der Wicklungsmotor
 ist hier an `10` und `9`, der Führungsmotor an `12` und `11` angeschlossen.
 
-*Wichtig: die Schrittmotoren müssen mit den 6 Schaltern auf folgende Konfiguration eingestellt werden.*
+*Wichtig: die Schrittmotortreiber müssen mit den 6 Schaltern auf folgende Konfiguration eingestellt werden.*
 
 | S1 | S2 | S3 | S4 | S5 | S6 |
 |:-:|:-:|:-:|:-:|:-:|:-:|
@@ -173,3 +174,10 @@ die korrekte Belegung der Schrittmotoren bestimmt werden kann.
 
 Der optische Endschalter wird an `GND` und `5 V` Versorgungsspannung angeschlossen und mit
 dem `S`- bzw. Signal-Pin auf einen Digitalpin (hier Pin `13`) des Arduino Nano gelegt.
+
+## Software
+
+Die Software besteht aus zwei Komponenten, die sich im Ordner [`/arduino`](/arduino) befinden.
+Die genauen Funktionsweisen der Codes können den zugehörigen README-Dateien entnommen werden. 
+Wie im Bereich *Hardware* bereits angedeutet, wird das Arduino-Projekt [`filamentextruder`](/arduino/filamentextruder) auf den Arduino Mega und das Projekt ['`motorsteuerung`](/arduino/motorsteuerung) auf
+den Arduino Nano hochgeladen.
