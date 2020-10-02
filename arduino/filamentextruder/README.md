@@ -1,4 +1,4 @@
-# Arduino-Code <!-- omit in toc -->
+# Arduino-Code: Filament-Extruder <!-- omit in toc -->
 
 Die Steuerung des Systems ist als *Finite State Machine* umgesetzt und läuft auf einem Arduino Mega.
 Die Temperaturregelung des Extruders erfolgt mithilfe eines Software-PID-Reglers, der die Leistung der Heizpatronen über Mosfets
