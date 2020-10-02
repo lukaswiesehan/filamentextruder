@@ -1,6 +1,0 @@
-{
-    "port": "/dev/tty.usbserial-1420",
-    "board": "arduino:avr:mega",
-    "configuration": "cpu=atmega2560",
-    "sketch": "filamentextruder.ino"
-}

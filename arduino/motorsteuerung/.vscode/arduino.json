@@ -1,6 +1,0 @@
-{
-    "sketch": "motorsteuerung.ino",
-    "board": "arduino:avr:nano",
-    "configuration": "cpu=atmega168",
-    "port": "/dev/tty.usbserial-1420"
-}
