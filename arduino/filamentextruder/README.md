@@ -6,7 +6,6 @@ steuern kann, welche per PWM-Signal angesprochen werden.
 
 - [Finite State Machine](#finite-state-machine)
 - [Benötigte Libraries](#benötigte-libraries)
-- [Konfiguration des Systems](#konfiguration-des-systems)
 - [Nextion Library Setup](#nextion-library-setup)
   - [Komponenten ein-/ausblenden](#komponenten-ein-ausblenden)
   - [Text bearbeiten](#text-bearbeiten)
@@ -20,9 +19,9 @@ Die State Machine, die als Basis der Steuerung dient, kann wie folgt vereinfacht
 
 ## Benötigte Libraries
 
-- Nextion.h
-- Adafruit_MAX31865.h
-- PID_v1.h
+- [Nextion.h](https://github.com/itead/ITEADLIB_Arduino_Nextion)
+- [Adafruit_MAX31865.h](https://github.com/adafruit/Adafruit_MAX31865)
+- [PID_v1.h](https://github.com/br3ttb/Arduino-PID-Library)
 
 ## Nextion Library Setup
 
