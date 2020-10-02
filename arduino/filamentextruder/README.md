@@ -4,6 +4,7 @@ Die Steuerung des Systems ist als *Finite State Machine* umgesetzt und läuft au
 Die Temperaturregelung des Extruders erfolgt mithilfe eines Software-PID-Reglers, der die Leistung der Heizpatronen über Mosfets
 steuern kann, welche per PWM-Signal angesprochen werden.
 
+###### Inhalt
 - [Finite State Machine](#finite-state-machine)
 - [Benötigte Libraries](#benötigte-libraries)
 - [Nextion Library Setup](#nextion-library-setup)

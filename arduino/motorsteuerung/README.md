@@ -3,6 +3,7 @@
 Da die Steuerung des Wicklungsmechanismus eine hohe Rechenfrequenz benötigt, wird diese
 von der restlichen Steuerung entkoppelt und läuft auf einem Arduino Nano. Der Steuerungsalgorithmus der Wicklung basiert im Wesentlichen auf der [AccelStepper](https://www.airspayce.com/mikem/arduino/AccelStepper/index.html)-Library. 
 
+###### Inhalt
 - [Funktionsweise des Wicklungsmechanismus](#funktionsweise-des-wicklungsmechanismus)
 - [Steuerungsalgoritmus](#steuerungsalgoritmus)
 - [Benötigte Libraries](#benötigte-libraries)
