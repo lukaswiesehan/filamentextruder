@@ -24,6 +24,7 @@ Betreut von Prof. Dr. Dietmar Pähler.*
     - [Schrittmotoren](#schrittmotoren)
     - [Optischer Endschalter](#optischer-endschalter)
 - [Software](#software)
+- [Konfiguration des Systems](#konfiguration-des-systems)
 - [Bedienung des Systems](#bedienung-des-systems)
 
 ## Einführung
@@ -180,8 +181,21 @@ dem `S`- bzw. Signal-Pin auf einen Digitalpin (hier Pin `13`) des Arduino Nano g
 
 Die Software besteht aus zwei Komponenten, die sich im Ordner [`/arduino`](/arduino) befinden.
 Die genauen Funktionsweisen der Codes können den zugehörigen README-Dateien entnommen werden. 
-Wie im Bereich *Hardware* bereits angedeutet, wird das Arduino-Projekt [`filamentextruder`](/arduino/filamentextruder) auf den Arduino Mega und das Projekt [`motorsteuerung`](/arduino/motorsteuerung) auf
-den Arduino Nano hochgeladen.
+Wie im Bereich *Hardware* bereits angedeutet, wird das Arduino-Projekt [`filamentextruder`](/arduino/filamentextruder) auf den Arduino Mega und das Projekt [`motorsteuerung`](/arduino/motorsteuerung) auf den Arduino Nano hochgeladen.
+
+## Konfiguration des Systems
+
+Um einen optimalen Prozess zu gewährleisten, sollten vor Inbetriebnahme einige Dinge beachtet werden.
+
+Je nach thermischer Isolation des Extruders werden sich die Reglerparameter ein wenig unterscheiden. Da das System verhältnismäßig träge ist,
+stellt das kein großes Problem dar. Um den Aufheizvorgang hinsichtlich seiner Dauer und Genauigkeit zu optimieren, sollten die PID-Parameter
+dem System entsprechend eingestellt werden. Wie dazu vorgegangen werden sollte, kann dem Wiki-Kapitel [Entwicklung/Temperaturregelung](https://github.com/lukaswiesehan/filamentextruder/wiki/Entwicklung#temperaturregelung) entnommen werden. Die bestimmten Reglerparameter können dann in [`filamentextruder.ino`](/arduino/filamentextruder/filamentextruder.ino) in den
+Zeilen 41 - 43 aktualisiert werden.
+
+Weiterhin sollte die Basis-Geschwindigkeit der Wicklung an den Extruder angepasst werden, obwohl sie durch die Verwendung des selben mitgelieferten Motors
+nur unwesentlich unterscheiden sollte. Im Wiki-Kapitel [Entwicklung/Wicklungsmechanismus](https://github.com/lukaswiesehan/filamentextruder/wiki/Entwicklung#wicklungsmechanismus)
+wird ausführlich beschrieben, wie der Parameter `EXTRUSION_FEED` an das System angepasst werden sollte, um einen optimalen Filamentdurchmesser nach der Extrusion
+zu gewährleisten. Dieser Parameter wird anschließend in [`motorsteuerung.ino`](/arduino/motorsteuerung/motorsteuerung.ino) in Zeile 11 aktualisiert.
 
 ## Bedienung des Systems
 
