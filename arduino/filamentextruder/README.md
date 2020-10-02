@@ -20,7 +20,9 @@ Die State Machine, die als Basis der Steuerung dient, kann wie folgt vereinfacht
 
 ## Benötigte Libraries
 
-tbd
+- Nextion.h
+- Adafruit_MAX31865.h
+- PID_v1.h
 
 ## Nextion Library Setup
 
@@ -83,7 +85,3 @@ bool NexText::setText(String buffer)
   ...
 }
 ```
-
-## Konfiguration des Systems
-
-tbd
