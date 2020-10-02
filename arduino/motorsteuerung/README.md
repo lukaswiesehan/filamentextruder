@@ -7,6 +7,7 @@ von der restlichen Steuerung entkoppelt und läuft auf einem Arduino Nano. Der S
 - [Funktionsweise des Wicklungsmechanismus](#funktionsweise-des-wicklungsmechanismus)
         - [Rendering des Wicklungsmechanismus](#rendering-des-wicklungsmechanismus)
 - [Steuerungsalgoritmus](#steuerungsalgoritmus)
+        - [Schema des Steuerungsalgorithmus](#schema-des-steuerungsalgorithmus)
 - [Benötigte Libraries](#benötigte-libraries)
 
 ## Funktionsweise des Wicklungsmechanismus
@@ -24,7 +25,18 @@ eine Umdrehung macht.
 
 ## Steuerungsalgoritmus
 
-Der Ablauf der 
+Der Ablauf der Steuerung wird im wesentlichen durch die Konstruktion des Wicklungsmechanismus bestimmt. Grundsätzlich werden die Motoren lediglich für einige Umdrehungen angesteuert, bevor die Rotationsgeschwindigkeit neu berechnet wird, da die Wicklung mit jeder Lage Filament auf der Spule verlangsamt werden muss, weil sich der
+Wicklungsradius um einen Filamentdurchmesser erhöht.
+
+Der Wicklungsmotor wird also ständig für eine volle Lage Filament, also einige volle Umdrehungen angesteuert, wobei die Drehrichtung gleich bleibt.
+
+Der Positionierungsmotor hingegen muss nach jeder Lage Filament nicht nur seine
+Drehgeschwindigkeit aktualisieren, sondern auch seine Drehrichtung ändern.
+
+Der sich daraus ergebende Ablauf ist nachfolgend schematisch dargestellt.
+
+###### Schema des Steuerungsalgorithmus
+![Schema Motorsteuerung](schema_motorsteuerung.png?raw=true)
 
 ## Benötigte Libraries
 
