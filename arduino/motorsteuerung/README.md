@@ -36,7 +36,7 @@ Drehgeschwindigkeit aktualisieren, sondern auch seine Drehrichtung ändern.
 Der sich daraus ergebende Ablauf ist nachfolgend schematisch dargestellt.
 
 ###### Schema des Steuerungsalgorithmus
-![Schema Motorsteuerung](motorsteuerung_scheme.png?raw=true)
+<p align="center"><img src="/motorsteuerung_scheme.png?raw=true" alt="Schema Motorsteuerung"></p>
 
 ## Benötigte Libraries
 
