@@ -221,3 +221,4 @@ demnach streng an den Prozess gebunden ist, ist im Folgenden kurz beschrieben.
 | **5.** | Sobald ausreichend Kunststoff extrudiert ist, den Strang in den Positionierer und anschließend in die Spule einfädeln. | |
 | **6.** | Wicklung starten, sobald der Filamentstrang eingefädelt und ein wenig auf Spannung ist. | ![Extrude](/hmi/screenshots/3_extrude.png) |
 | **7.** | Prozess gelegentlich überprüfen, ggf. Wicklungsgeschwindigkeit über entsprechende Schaltflächen anpassen. | ![Windup](/hmi/screenshots/4_windup.png) |
+| **8.** | Sobald die Spule ausreichend gefüllt ist, Schaltfläche Cooldown betätigen. | |
