@@ -164,7 +164,7 @@ ist hier an `10` und `9`, der Führungsmotor an `12` und `11` angeschlossen.
 
 | S1 | S2 | S3 | S4 | S5 | S6 |
 |:-:|:-:|:-:|:-:|:-:|:-:|
-| 0 | 0 | 0 | 1 | 1 | 1 |
+| 0 | 0 | 0 | 1 | 1 | 0 |
 
 #### Schrittmotoren
 
