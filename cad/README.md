@@ -24,10 +24,10 @@ montiert und verkabelt werden. Die linke Seite des Gehäuses, in die der Lüfter
 
 | Dokument | Beschreibung |
 |---|---|
-| [`001_rückseite.pdf`](/zeichnungen/001_rückseite.pdf) | Rückseite des Gehäuses mit Aussparung für die Kaltgerätebuchse. An diese Seite wird von innen das Netzteil montiert. |
-| [`002_vorderseite.pdf`](/zeichnungen/002_vorderseite.pdf) | Vorderseite des Gehäuses mit Aussparung für das Display. An diese Seite werden von innen alle elektronischen Komponenten montiert. |
-| [`003_unterseite.pdf`](/zeichnungen/003_unterseite.pdf) | Unterseite des Gehäuses. |
-| [`004_oberseite.pdf`](/zeichnungen/004_oberseite.pdf) | Oberseite des Gehäuses. Auf diese Seite wird der Extruder selbst montiert. |
+| [`001_rückseite.pdf`](cad/zeichnungen/001_rückseite.pdf) | Rückseite des Gehäuses mit Aussparung für die Kaltgerätebuchse. An diese Seite wird von innen das Netzteil montiert. |
+| [`002_vorderseite.pdf`](cad/zeichnungen/002_vorderseite.pdf) | Vorderseite des Gehäuses mit Aussparung für das Display. An diese Seite werden von innen alle elektronischen Komponenten montiert. |
+| [`003_unterseite.pdf`](cad/zeichnungen/003_unterseite.pdf) | Unterseite des Gehäuses. |
+| [`004_oberseite.pdf`](cad/zeichnungen/004_oberseite.pdf) | Oberseite des Gehäuses. Auf diese Seite wird der Extruder selbst montiert. |
 
 ### Einfülltrichter
 
@@ -44,23 +44,23 @@ Trichter am Getriebegehäuse des Extrudermotors fixiert werden kann.
 
 | Dokument | Beschreibung |
 |---|---|
-| [`005_trichter_seite1.pdf`](/zeichnungen/005_trichter_seite1.pdf) | Im Rendering sichtbare Vorderseite des Trichters. |
-| [`006_trichter_seite2.pdf`](/zeichnungen/006_trichter_seite2.pdf) | Rückseite des Trichters. Mit zwei Bohrungen zur Fixierung des Trichters am Getriebegehäse versehen. |
-| [`007_trichter_boden.pdf`](/zeichnungen/007_trichter_boden.pdf) | Bodenblech des Trichters, das wesentlich für den Einlauf des Rohmaterials zur Schnecke sorgt. |
+| [`005_trichter_seite1.pdf`](cad/zeichnungen/005_trichter_seite1.pdf) | Im Rendering sichtbare Vorderseite des Trichters. |
+| [`006_trichter_seite2.pdf`](cad/zeichnungen/006_trichter_seite2.pdf) | Rückseite des Trichters. Mit zwei Bohrungen zur Fixierung des Trichters am Getriebegehäse versehen. |
+| [`007_trichter_boden.pdf`](cad/zeichnungen/007_trichter_boden.pdf) | Bodenblech des Trichters, das wesentlich für den Einlauf des Rohmaterials zur Schnecke sorgt. |
 
 ## Druckteile
 
 Neben Gehäuseteilen und Einfülltrichter werden zum vollständigen Aufbau des Systems einige Druckteile benötigt. 
 Diese sind im Wesentlichen im Bereich des Wicklungsmechanismus verbaut. Alle Druckteile sind als `.stl`-Files im
-Verzeichnis [`/prints`](/prints) abgelegt und der Übersicht halber nachfolgend abgebildet.
+Verzeichnis [`/prints`](cad/prints) abgelegt und der Übersicht halber nachfolgend abgebildet.
 
 | Druckdatei | Abbildung |
 |---|---|
-| [`führung_basis.stl`](/prints/führung_basis.stl) | ![führung_basis.stl](/prints/führung_basis.png) |
-| [`führung_positionierer.stl`](/prints/führung_positionierer.stl) | ![führung_positionierer.stl](/prints/führung_positionierer.png) |
-| [`führung_sensorhalter.stl`](/prints/führung_sensorhalter.stl) | ![führung_sensorhalter.stl](/prints/führung_sensorhalter.png) |
-| [`gehäuse_displayrahmen.stl`](/prints/gehäuse_displayrahmen.stl) | ![gehäuse_displayrahmen.stl](/prints/gehäuse_displayrahmen.png) |
-| [`gehäuse_seite_lüfter.stl`](/prints/gehäuse_seite_lüfter.stl) | ![gehäuse_seite_lüfter.stl](/prints/gehäuse_seite_lüfter.png) |
-| [`wicklung_lageraufnahme.stl`](/prints/wicklung_lageraufnahme.stl) | ![wicklung_lageraufnahme.stl](/prints/wicklung_lageraufnahme.png) |
-| [`wicklung_motoraufnahme.stl`](/prints/wicklung_motoraufnahme.stl) | ![wicklung_motoraufnahme.stl](/prints/wicklung_motoraufnahme.png) |
-| [`wicklung_spulenaufnahme.stl`](/prints/wicklung_spulenaufnahme.stl) | ![wicklung_spulenaufnahme.stl](/prints/wicklung_spulenaufnahme.png) |
+| [`führung_basis.stl`](cad/prints/führung_basis.stl) | ![führung_basis.stl](/prints/führung_basis.png) |
+| [`führung_positionierer.stl`](cad/prints/führung_positionierer.stl) | ![führung_positionierer.stl](/prints/führung_positionierer.png) |
+| [`führung_sensorhalter.stl`](cad/prints/führung_sensorhalter.stl) | ![führung_sensorhalter.stl](/prints/führung_sensorhalter.png) |
+| [`gehäuse_displayrahmen.stl`](cad/prints/gehäuse_displayrahmen.stl) | ![gehäuse_displayrahmen.stl](/prints/gehäuse_displayrahmen.png) |
+| [`gehäuse_seite_lüfter.stl`](cad/prints/gehäuse_seite_lüfter.stl) | ![gehäuse_seite_lüfter.stl](/prints/gehäuse_seite_lüfter.png) |
+| [`wicklung_lageraufnahme.stl`](cad/prints/wicklung_lageraufnahme.stl) | ![wicklung_lageraufnahme.stl](/prints/wicklung_lageraufnahme.png) |
+| [`wicklung_motoraufnahme.stl`](cad/prints/wicklung_motoraufnahme.stl) | ![wicklung_motoraufnahme.stl](/prints/wicklung_motoraufnahme.png) |
+| [`wicklung_spulenaufnahme.stl`](cad/prints/wicklung_spulenaufnahme.stl) | ![wicklung_spulenaufnahme.stl](/prints/wicklung_spulenaufnahme.png) |
