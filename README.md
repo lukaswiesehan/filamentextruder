@@ -82,6 +82,7 @@ werden, weshalb sie in der Kostenaufstellung nicht berücksichtigt werden. Zudem
 | 1x | [Arduino Nano](https://www.az-delivery.de/products/nano-v3-mit-ch340-arduino-kompatibel) | Steuerung des Wicklungsmechanismus | 6,49€ |
 | 1x | [Relais-Modul KY-019](https://www.az-delivery.de/products/relais-modul) | Schalten des Extrudermotors | 4,99€ |
 | 1x | [Optischer Endschalter](https://www.amazon.de/Homyl-Optischer-Begrenzungsschalter-Endanschlag-Werkzeuge-Rot/dp/B07MHFTVNF/) | Referenzierung des Führungsmotors | 2,51€ |
+| 2x | [PC-Lüfter 80x80x25](https://www.conrad.de/de/p/logilink-fan101-pc-gehaeuse-luefter-schwarz-b-x-h-x-t-80-x-80-x-25-mm-871001.html) | Kühlung elektronischer Bauteile und des Filaments | 4,18€ |
 
 Die Hardware-Kosten summieren sich damit auf **649,02€** zzgl. diverser Versandkosten sowie der Gehäuse- bzw. Druckteile.
 
