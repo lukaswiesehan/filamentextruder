@@ -58,7 +58,7 @@ Verzeichnis [`/prints`](prints) abgelegt und der Übersicht halber nachfolgend a
 |---|---|
 | [`führung_basis.stl`](prints/führung_basis.stl) | ![führung_basis.stl](prints/führung_basis.png) |
 | [`führung_positionierer.stl`](prints/führung_positionierer.stl) | ![führung_positionierer.stl](prints/führung_positionierer.png) |
-| [`führung_sensorhalter.stl`](prints/führung_sensorhalter.stl) | ![führung_sensorhalter.stl](/prints/führung_sensorhalter.png) |
+| [`führung_sensorhalter.stl`](prints/führung_sensorhalter.stl) | ![führung_sensorhalter.stl](prints/führung_sensorhalter.png) |
 | [`gehäuse_displayrahmen.stl`](prints/gehäuse_displayrahmen.stl) | ![gehäuse_displayrahmen.stl](prints/gehäuse_displayrahmen.png) |
 | [`gehäuse_seite_lüfter.stl`](prints/gehäuse_seite_lüfter.stl) | ![gehäuse_seite_lüfter.stl](prints/gehäuse_seite_lüfter.png) |
 | [`wicklung_lageraufnahme.stl`](prints/wicklung_lageraufnahme.stl) | ![wicklung_lageraufnahme.stl](prints/wicklung_lageraufnahme.png) |

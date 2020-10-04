@@ -27,7 +27,6 @@ Betreut von Prof. Dr. Dietmar Pähler.*
 - [Software](#software)
 - [Konfiguration des Systems](#konfiguration-des-systems)
 - [Bedienung des Systems](#bedienung-des-systems)
-        - [Extruder im Prozess](#extruder-im-prozess)
 
 ## Einführung
 
@@ -49,7 +48,7 @@ Das Stammverzeichnis des Repositorys beinhaltet alles, was für eine Rekonstrukt
 
 | Verzeichnis | Inhalt |
 |---|---|
-| [`/arduino`](/arduino/filamentextruder) | Arduino-Projekt, Liste der notwendigen Libraries, Anleitung zur notwendigen Modifikation der Nextion-Library |
+| [`/arduino`](/arduino) | Arduino-Projekte, Liste der notwendigen Libraries, Anleitung zur notwendigen Modifikation der Nextion-Library |
 | [`/cad`](/cad) | CAD-Modell des fertigen Systems, `.stl`-Dateien der gedruckten Einzelteile |
 | [`/hmi`](/hmi) | `.HMI`-Datei und Anleitung zur Installation des Interfaces auf dem Nextion Display, Screenshots des Interfaces |
 
@@ -186,6 +185,9 @@ Die Software besteht aus zwei Komponenten, die sich im Ordner [`/arduino`](/ardu
 Die genauen Funktionsweisen der Codes können den zugehörigen README-Dateien entnommen werden. 
 Wie im Bereich *Hardware* bereits angedeutet, wird das Arduino-Projekt [`filamentextruder`](/arduino/filamentextruder) auf den Arduino Mega und das Projekt [`motorsteuerung`](/arduino/motorsteuerung) auf den Arduino Nano hochgeladen.
 
+Weiterhin muss die Display-Software auf das Nextion-Display geladen werden. Eine kurze Beschreibung dessen findet
+sich im Verzeichnis [`/hmi`](/hmi).
+
 ## Konfiguration des Systems
 
 Um einen optimalen Prozess zu gewährleisten, sollten vor Inbetriebnahme einige Dinge beachtet werden.
@@ -201,7 +203,13 @@ zu gewährleisten. Dieser Parameter wird anschließend in [`motorsteuerung.ino`]
 
 ## Bedienung des Systems
 
-###### Extruder im Prozess
+###### Extruder im Prozess <!-- omit in toc -->
 ![Testlauf](testlauf.jpeg)
 
-tbd.
+Die Benutzeroberfläche wurde mit einer einfachen Bedienbarkeit im Hinterkopf designed. Der Bediener wird im Wesentlichen durch die Seiten geleitet, 
+die den verschiedenen States des [Zustandsautomaten](/arduino/filamentextruder#finite-state-machine) entsprechen. Der Ablauf der Bedienung, die 
+demnach streng an den Prozess gebunden ist, ist im Folgenden kurz beschrieben.
+
+| Pos. | Beschreibung | Abbildung |
+| :-: | --- | --- |
+| 2. | Warten, bis das System initialisiert und der Führungsmotor referenziert ist. | ![Initialisierung](/hmi/screenshots/0_init.png) |
