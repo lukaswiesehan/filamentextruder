@@ -215,4 +215,5 @@ demnach streng an den Prozess gebunden ist, ist im Folgenden kurz beschrieben.
 | **1.** | Einschalten der Anlage am Schalter der Kaltgerätebuchse | |
 | **2.** | Warten, bis das System initialisiert und der Führungsmotor referenziert ist. | ![Initialisierung](/hmi/screenshots/0_init.png) |
 | **3.** | Im Idle-Zustand kann der Bediener entweder den Prozess starten oder die Einstellungen öffnen. | ![Idle](/hmi/screenshots/1_idle.png) |
-| **3a.** | In den Einstellungen kann die Größe der Spule eingestellt werden, die für den Wicklungsprozess benötigt wird. | ![Idle](/hmi/screenshots/5_settings.png) |
+| **3a.** | In den Einstellungen kann die Größe der Spule eingestellt werden, die für den Wicklungsprozess benötigt wird. Außerdem kann die Extrusionstemperatur an den verwendeten Kunststoff angepasst werden. | ![Idle](/hmi/screenshots/5_settings.png) |
+| **3b.** | Wählt der Bediener in **3.** den Punkt aufheiten, so wird der Prozess gestartet. Warten, bis die Extrusionstemperatur erreicht ist. | ![Idle](/hmi/screenshots/2_heatup.png) | 
