@@ -212,4 +212,4 @@ demnach streng an den Prozess gebunden ist, ist im Folgenden kurz beschrieben.
 
 | Pos. | Beschreibung | Abbildung |
 | :-: | --- | --- |
-| 2. | Warten, bis das System initialisiert und der Führungsmotor referenziert ist. | ![Initialisierung](/hmi/screenshots/0_init.png) |
+| **2.** | Warten, bis das System initialisiert und der Führungsmotor referenziert ist. | ![Initialisierung](/hmi/screenshots/0_init.png) |
