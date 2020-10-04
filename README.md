@@ -6,6 +6,7 @@ Bachelorprojekt im Studiengang Mechatronik, HAW Hamburg.
 *Entwickelt von Tobias Freytag, Anton Neike, Max Sahlke, Lukas Wiesehan.  
 Betreut von Prof. Dr. Dietmar Pähler.*
 
+###### Inhalt <!-- omit in toc -->
 - [Einführung](#einführung)
 - [Repo-Struktur](#repo-struktur)
 - [Hardware](#hardware)
@@ -26,6 +27,7 @@ Betreut von Prof. Dr. Dietmar Pähler.*
 - [Software](#software)
 - [Konfiguration des Systems](#konfiguration-des-systems)
 - [Bedienung des Systems](#bedienung-des-systems)
+        - [Extruder im Prozess](#extruder-im-prozess)
 
 ## Einführung
 
@@ -197,5 +199,8 @@ wird ausführlich beschrieben, wie der Parameter `EXTRUSION_FEED` an das System 
 zu gewährleisten. Dieser Parameter wird anschließend in [`motorsteuerung.ino`](/arduino/motorsteuerung/motorsteuerung.ino#L11) aktualisiert.
 
 ## Bedienung des Systems
+
+###### Extruder im Prozess
+![Testlauf](testlauf.jpeg)
 
 tbd.
